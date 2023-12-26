@@ -9,10 +9,15 @@ public interface Snake extends GraphicalObject{
 
     /**@return the previous segment of the snake. Null if it does not exist.*/
     abstract Snake prev();
+    /**@return the last segment of the snake. Null if it does not exist.*/
+    abstract Snake last();
 
     /**Add a segment at the end of the snake*/
     abstract void add();
 
     /** Remove the segment and all the next one. If the segment isHead(), call the method killSnake().*/
     abstract void removeFrom();
+
+  abstract void move();
+
 }

@@ -12,31 +12,56 @@ public class MySnake implements Snake {
     private boolean isHead;
     private MySnake next;
     private MySnake previous;
+    private MySnake last;
 
-    public MySnake(Position pos){
+    private Circle segment;
+   private Direction currentDirection;
+
+    private double velocity= radius/2;
+
+
+    public MySnake(Position pos, boolean isHead, MySnake last){
+        currentDirection = null;
         this.next= null;
         this.previous= null;
         this.position= pos;
+        this.isHead = isHead;
+        segment = null;
+        if(isHead){
+            last = this;
+        }
+        else{
+            this.last = last;
+        }
     }
 
-    public MySnake(MySnake previous,MySnake next,Position pos){
+    public MySnake(MySnake previous,MySnake next,Position pos, boolean isHead, MySnake last){
+        currentDirection = null;
         this.previous= previous;
         this.next= next;
         this.position= pos;
+        this.isHead = isHead;
+        segment = null;
+        if(isHead){
+            last = this;
+        }
+        else{
+            this.last = last;
+        }
     }
 
     @Override
     public void display(Screen screen) {
-        Circle display= new Circle();
-        display.setCenterX(position.getX());
-        display.setCenterY(position.getY());
-        display.setRadius(radius);
+        segment = new Circle();
+        segment.setCenterX(position.getX());
+        segment.setCenterY(position.getY());
+        segment.setRadius(radius);
         if (isHead()){
-            display.setFill(Color.GREEN);
+            segment.setFill(Color.GREEN);
         } else {
-            display.setFill(Color.FORESTGREEN);
+            segment.setFill(Color.FORESTGREEN);
         }
-        screen.add(display);
+        screen.add(segment);
     }
 
     @Override
@@ -66,7 +91,16 @@ public class MySnake implements Snake {
     }
 
     @Override
-    public void add() {
+    public Snake last() {
+        return last;
+    }
+
+    public void setLast(MySnake last) {
+        this.last = last;
+    }
+
+    @Override
+    public void add() { //ici problème si on est la head et que prev est null
         MySnake segment= this;
         while(segment.next() != null){
             segment= (MySnake) segment.next();
@@ -76,11 +110,51 @@ public class MySnake implements Snake {
         Position posNew= new MyPosition(
                 posSegm.getX()+(posSegm.getX()-posSegmPrev.getX()),
                 posSegm.getY()+(posSegm.getY()-posSegmPrev.getY()));
-        segment.next= new MySnake(segment,null,posNew);
+        segment.next= new MySnake(segment,null,posNew,false,segment);
     }
 
     @Override
     public void removeFrom() {
         previous.next=null;
     }
+
+    public void setCurrentDirection(Direction dir){
+        System.out.println("la direction: "+ dir);
+        currentDirection = dir;
+    }
+
+    public Direction getCurrentDirection() {
+        return currentDirection;
+    }
+
+    public void moveCircle(){
+        this.segment.setCenterX(this.position.getX());
+        this.segment.setCenterY(this.position.getY());
+    }
+
+    public void move(){
+        MySnake tmp = last;
+        if(!isHead){
+            //erreur
+        }
+        if(currentDirection == null){
+           System.out.println("currentDirection est null");
+        }
+        while(tmp != this){
+            tmp.previous.getPos().setY(tmp.getPos().getY());
+            tmp.moveCircle();
+            tmp = tmp.previous;
+        }
+        switch (currentDirection){
+            case UP: tmp.position.setY(this.position.getY()-velocity); break;
+            case DOWN: tmp.position.setY(this.position.getY()+velocity); break;
+            case LEFT: tmp.position.setX(this.position.getX()-velocity);break;
+            case RIGHT:tmp.position.setX(this.position.getX()+velocity); break;
+            default: System.out.println("je suis pas supposé être là move() mySnake"); break;
+        }
+        tmp.moveCircle();
+
+
+    }
+
 }

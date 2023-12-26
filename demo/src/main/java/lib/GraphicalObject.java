@@ -1,7 +1,7 @@
 package lib;
 
 public interface GraphicalObject {
-    abstract void affiche();
+    abstract void display(Screen screen);
     abstract Position getPos();
-    abstract Number getRadius();
+    abstract Double getRadius();
 }

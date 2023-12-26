@@ -13,14 +13,16 @@ public class MySnake implements Snake {
     private MySnake next;
     private MySnake previous;
 
-    public MySnake(){
+    public MySnake(Position pos){
         this.next= null;
         this.previous= null;
+        this.position= pos;
     }
 
-    public MySnake(MySnake previous,MySnake next){
+    public MySnake(MySnake previous,MySnake next,Position pos){
         this.previous= previous;
         this.next= next;
+        this.position= pos;
     }
 
     @Override
@@ -69,7 +71,12 @@ public class MySnake implements Snake {
         while(segment.next() != null){
             segment= (MySnake) segment.next();
         }
-        segment.next= new MySnake(segment,null);
+        Position posSegm= segment.position;
+        Position posSegmPrev= segment.previous.position;
+        Position posNew= new MyPosition(
+                posSegm.getX()+(posSegm.getX()-posSegmPrev.getX()),
+                posSegm.getY()+(posSegm.getY()-posSegmPrev.getY()));
+        segment.next= new MySnake(segment,null,posNew);
     }
 
     @Override

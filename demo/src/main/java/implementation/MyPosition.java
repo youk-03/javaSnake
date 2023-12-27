@@ -2,7 +2,7 @@ package implementation;
 
 import lib.Position;
 
-public class MyPosition implements Position {
+public class MyPosition implements Position<Double> {
     private double x;
     private double y;
 

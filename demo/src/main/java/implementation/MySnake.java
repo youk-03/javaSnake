@@ -6,9 +6,11 @@ import lib.Position;
 import lib.Screen;
 import lib.Snake;
 
+import java.security.InvalidParameterException;
+
 public class MySnake implements Snake {
-    private Position position;
-    private Double radius= 5.0;
+    private Position<Double> position;
+    private final Double radius= 5.0;
     private boolean isHead;
     private MySnake next;
     private MySnake previous;
@@ -17,10 +19,10 @@ public class MySnake implements Snake {
     private Circle segment;
    private Direction currentDirection;
 
-    private double velocity= radius/2;
+    final double velocity= radius/2;
 
 
-    public MySnake(Position pos, boolean isHead, MySnake last){
+    public MySnake(Position<Double> pos, boolean isHead, MySnake last){
         currentDirection = null;
         this.next= null;
         this.previous= null;
@@ -35,7 +37,7 @@ public class MySnake implements Snake {
         }
     }
 
-    public MySnake(MySnake previous,MySnake next,Position pos, boolean isHead, MySnake last){
+    public MySnake(MySnake previous,MySnake next,Position<Double> pos, boolean isHead, MySnake last){
         currentDirection = null;
         this.previous= previous;
         this.next= next;
@@ -65,8 +67,8 @@ public class MySnake implements Snake {
     }
 
     @Override
-    public Position getPos() {
-        Position pos= new MyPosition(position.getX(),position.getY());
+    public Position<Double> getPos() {
+        Position<Double> pos= new MyPosition(position.getX(),position.getY());
         return position;
     }
 
@@ -105,9 +107,9 @@ public class MySnake implements Snake {
         while(segment.next() != null){
             segment= (MySnake) segment.next();
         }
-        Position posSegm= segment.position;
-        Position posSegmPrev= segment.previous.position;
-        Position posNew= new MyPosition(
+        Position<Double> posSegm= segment.position;
+        Position<Double> posSegmPrev= segment.previous.position;
+        Position<Double> posNew= new MyPosition(
                 posSegm.getX()+(posSegm.getX()-posSegmPrev.getX()),
                 posSegm.getY()+(posSegm.getY()-posSegmPrev.getY()));
         segment.next= new MySnake(segment,null,posNew,false,segment);
@@ -126,42 +128,43 @@ public class MySnake implements Snake {
         return currentDirection;
     }
 
+
     public void moveCircle(){
         this.segment.setCenterX(this.position.getX());
         this.segment.setCenterY(this.position.getY());
-        System.out.println("x: "+ this.segment.getCenterX() + " y: "+ this.segment.getCenterY());
     }
+
 
     public void move(){
         MySnake tmp = last;
         if(!isHead){
-            //erreur
+            throw new InvalidParameterException();
         }
         if(currentDirection == null){
            System.out.println("currentDirection est null");
         }
-        switch (currentDirection){
+        switch (currentDirection){ //border of the screen test
             case UP: if(this.position.getY()-velocity<0) return; break;
-            case DOWN: if(this.position.getY()+velocity>PaneScreen.windowHeight) return; break;
+            case DOWN: if(this.position.getY()+velocity>lib.SlitherScene.windowHeight) return; break;
             case LEFT: if(this.position.getX()-velocity<0) return; break;
-            case RIGHT:if(this.position.getX()+velocity>PaneScreen.windowWidth) return; break;
-            default: System.out.println("je suis pas supposé être là move() mySnake"); break;
+            case RIGHT:if(this.position.getX()+velocity>lib.SlitherScene.windowWidth) return; break;
         }
-        while(tmp != this){
+        while(tmp != this){ //moving the segment
             tmp.previous.getPos().setY(tmp.getPos().getY());
             tmp.moveCircle();
             tmp = tmp.previous;
         }
-        switch (currentDirection){
+        switch (currentDirection){ //moving the head
             case UP: tmp.position.setY(this.position.getY()-velocity); break;
             case DOWN: tmp.position.setY(this.position.getY()+velocity); break;
             case LEFT: tmp.position.setX(this.position.getX()-velocity);break;
             case RIGHT:tmp.position.setX(this.position.getX()+velocity); break;
-            default: System.out.println("je suis pas supposé être là move() mySnake"); break;
         }
         tmp.moveCircle();
 
 
     }
-
 }
+
+//TODO interface Scene
+//TODO faire un main pour le 1.

@@ -17,7 +17,9 @@ public interface Snake extends GraphicalObject{
 
     /** Remove the segment and all the next one. If the segment isHead(), call the method killSnake().*/
     abstract void removeFrom();
-
+/** Change the Position of every Snake part, needs to be called on the head ! */
   abstract void move();
+  /** change the pos of the circle of this on the scene */
+  abstract void moveCircle();
 
 }

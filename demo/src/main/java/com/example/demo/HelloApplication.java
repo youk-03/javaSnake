@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.layout.*;
 import lib.Snake;
@@ -21,6 +22,7 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+
          /* Pane canvas = new Pane();
         canvas.setStyle("-fx-background-color: black;");
         //canvas.setPrefSize(200,200);
@@ -41,7 +43,8 @@ public class HelloApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         //Scene scene = new Scene(fxmlLoader.load(), 1200, 600);
-        Scene scene = new Scene(canvas, 1200, 600);
+        Scene scene = new Scene(canvas, Screen.getPrimary().getBounds().getWidth(),Screen.getPrimary().getBounds().getHeight()-20); //padding dans fxml
+
         /////////////////////////////////////////////////////////////////: scene.init
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override

@@ -119,7 +119,6 @@ public class MySnake implements Snake {
     }
 
     public void setCurrentDirection(Direction dir){
-        System.out.println("la direction: "+ dir);
         currentDirection = dir;
     }
 
@@ -130,6 +129,7 @@ public class MySnake implements Snake {
     public void moveCircle(){
         this.segment.setCenterX(this.position.getX());
         this.segment.setCenterY(this.position.getY());
+        System.out.println("x: "+ this.segment.getCenterX() + " y: "+ this.segment.getCenterY());
     }
 
     public void move(){
@@ -139,6 +139,13 @@ public class MySnake implements Snake {
         }
         if(currentDirection == null){
            System.out.println("currentDirection est null");
+        }
+        switch (currentDirection){
+            case UP: if(this.position.getY()-velocity<0) return; break;
+            case DOWN: if(this.position.getY()+velocity>PaneScreen.windowHeight) return; break;
+            case LEFT: if(this.position.getX()-velocity<0) return; break;
+            case RIGHT:if(this.position.getX()+velocity>PaneScreen.windowWidth) return; break;
+            default: System.out.println("je suis pas supposé être là move() mySnake"); break;
         }
         while(tmp != this){
             tmp.previous.getPos().setY(tmp.getPos().getY());

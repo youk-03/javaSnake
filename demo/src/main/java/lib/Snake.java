@@ -1,5 +1,7 @@
 package lib;
 
+import javafx.scene.shape.Circle;
+
 public interface Snake extends GraphicalObject{
     /**@return return true if the segment of the snake is the head*/
     abstract boolean isHead();
@@ -21,5 +23,7 @@ public interface Snake extends GraphicalObject{
   abstract void move();
   /** change the pos of the circle of this on the scene */
   abstract void moveCircle();
+
+  abstract Circle getSegment();
 
 }

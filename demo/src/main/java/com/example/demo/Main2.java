@@ -1,29 +1,24 @@
 package com.example.demo;
 
-import implementation.*;
+import implementation.MyPosition;
+import implementation.MySlitherScene;
+import implementation.MySnake;
+import implementation.PaneScreen;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.scene.layout.*;
 import lib.SlitherScene;
-import lib.Snake;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class Main2 extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        MySnake head = new MySnake(new MyPosition(SlitherScene.windowWidth/2,SlitherScene.windowHeight/2),true);
+        MySnake head = new MySnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2), true);
         PaneScreen canvas = new PaneScreen();
         head.display(canvas);
 
@@ -32,6 +27,19 @@ public class HelloApplication extends Application {
         //Scene scene = new Scene(canvas, Screen.getPrimary().getBounds().getWidth(),Screen.getPrimary().getBounds().getHeight()-20); //padding dans fxml
         MySlitherScene scene = new MySlitherScene(canvas);
         scene.init(head);
+
+
+      Button addtail = new Button("addSegment");
+        addtail.relocate(SlitherScene.windowWidth/2,20);
+        addtail.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                head.add();
+                head.last().display(canvas);
+            }
+        });
+        addtail.setFocusTraversable(false);
+       canvas.add(addtail);
 
 
 
@@ -45,4 +53,8 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+
 }
+
+
+

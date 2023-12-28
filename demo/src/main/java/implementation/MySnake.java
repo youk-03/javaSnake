@@ -14,15 +14,15 @@ public class MySnake implements Snake {
     private boolean isHead;
     private MySnake next;
     private MySnake previous;
-    private MySnake last;
+    private static MySnake last;
 
     private Circle segment;
    private Direction currentDirection;
 
-    final double velocity= radius/2;
+    final double velocity= radius*2;
 
 
-    public MySnake(Position<Double> pos, boolean isHead, MySnake last){
+    public MySnake(Position<Double> pos, boolean isHead){
         currentDirection = null;
         this.next= null;
         this.previous= null;
@@ -32,12 +32,10 @@ public class MySnake implements Snake {
         if(isHead){
             last = this;
         }
-        else{
-            this.last = last;
-        }
+
     }
 
-    public MySnake(MySnake previous,MySnake next,Position<Double> pos, boolean isHead, MySnake last){
+    public MySnake(MySnake previous,MySnake next,Position<Double> pos, boolean isHead){
         currentDirection = null;
         this.previous= previous;
         this.next= next;
@@ -47,9 +45,15 @@ public class MySnake implements Snake {
         if(isHead){
             last = this;
         }
-        else{
-            this.last = last;
-        }
+    }
+
+    public Circle getSegment() {
+        return segment;
+    }
+
+    @Override
+    public Snake last() {
+        return last;
     }
 
     @Override
@@ -69,7 +73,7 @@ public class MySnake implements Snake {
     @Override
     public Position<Double> getPos() {
         Position<Double> pos= new MyPosition(position.getX(),position.getY());
-        return position;
+        return pos;
     }
 
     @Override
@@ -91,29 +95,33 @@ public class MySnake implements Snake {
     public Snake prev() {
         return previous;
     }
-
     @Override
-    public Snake last() {
-        return last;
-    }
-
-    public void setLast(MySnake last) {
-        this.last = last;
-    }
-
-    @Override
-    public void add() { //ici problème si on est la head et que prev est null
+    public void add() {
         MySnake segment= this;
-        while(segment.next() != null){
-            segment= (MySnake) segment.next();
+
+        if(segment.next != null) {
+
+            while (segment.next() != null) {
+                segment = (MySnake) segment.next();
+            }
+            Position<Double> posSegm = segment.position;
+            Position<Double> posSegmPrev = segment.previous.position;
+            Position<Double> posNew = new MyPosition(
+                    posSegm.getX() + (posSegm.getX() - posSegmPrev.getX()),
+                    posSegm.getY() + (posSegm.getY() - posSegmPrev.getY()));
+            segment.next = new MySnake(segment, null, posNew, false);
         }
-        Position<Double> posSegm= segment.position;
-        Position<Double> posSegmPrev= segment.previous.position;
-        Position<Double> posNew= new MyPosition(
-                posSegm.getX()+(posSegm.getX()-posSegmPrev.getX()),
-                posSegm.getY()+(posSegm.getY()-posSegmPrev.getY()));
-        segment.next= new MySnake(segment,null,posNew,false,segment);
-    }
+        else {
+            if(segment.isHead) {
+                Position<Double> pos = this.position;
+                Position<Double> posNew = new MyPosition(pos.getX() - (segment.radius * 2), pos.getY());
+                segment.next = new MySnake(segment, null, posNew, false);
+            }
+        }
+        last = segment.next;
+
+        }
+
 
     @Override
     public void removeFrom() {
@@ -141,7 +149,7 @@ public class MySnake implements Snake {
             throw new InvalidParameterException();
         }
         if(currentDirection == null){
-           System.out.println("currentDirection est null");
+           throw new NullPointerException();
         }
         switch (currentDirection){ //border of the screen test
             case UP: if(this.position.getY()-velocity<0) return; break;
@@ -150,7 +158,9 @@ public class MySnake implements Snake {
             case RIGHT:if(this.position.getX()+velocity>lib.SlitherScene.windowWidth) return; break;
         }
         while(tmp != this){ //moving the segment
-            tmp.previous.getPos().setY(tmp.getPos().getY());
+            System.out.println("ah");
+            tmp.position.setY(tmp.previous.position.getY());
+            tmp.position.setX(tmp.previous.position.getX());
             tmp.moveCircle();
             tmp = tmp.previous;
         }
@@ -166,5 +176,4 @@ public class MySnake implements Snake {
     }
 }
 
-//TODO interface Scene
 //TODO faire un main pour le 1.

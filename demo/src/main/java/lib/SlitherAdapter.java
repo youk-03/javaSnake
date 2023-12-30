@@ -21,7 +21,7 @@ public interface SlitherAdapter {
      * @return the position of the mouse relative to pos
      * @throws java.security.InvalidParameterException
      */
-    abstract Number posOfMouse(Position pos);
+    abstract double posOfMouse(Position pos);
 
     /** Get the position of the mouse relative to the given pos
      *
@@ -29,5 +29,5 @@ public interface SlitherAdapter {
      * @return the position of the next event relative to pos
      * @throws java.security.InvalidParameterException
      */
-    abstract Number posOfEvent(Position pos);
+    abstract double posOfEvent(Position pos);
 }

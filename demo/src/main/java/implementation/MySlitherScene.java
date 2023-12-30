@@ -6,14 +6,18 @@ import javafx.scene.input.KeyEvent;
 import lib.SlitherScene;
 import lib.Snake;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MySlitherScene extends SlitherScene {
     public MySlitherScene(Parent parent) {
         super(parent);
     }
 
     @Override
-    public void init(Snake head) {
-        if(!(head instanceof MySnake)){
+    public void init(List<Snake> snakeList) {
+        Snake playable= snakeList.get(0);
+        if(!(playable instanceof ControllableSnake)){
             throw new IllegalArgumentException();
         }
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -21,26 +25,21 @@ public class MySlitherScene extends SlitherScene {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                     case UP:
-                        if (((MySnake) head).getCurrentDirection() != Direction.DOWN) {
-                            ((MySnake) head).setCurrentDirection(Direction.UP);
-                            head.move();
-                        }
+                        ((ControllableSnake) playable).setLastInput(Direction.UP);
                         break;
-                    case DOWN:   if (((MySnake) head).getCurrentDirection() != Direction.UP) {
-                        ((MySnake) head).setCurrentDirection(Direction.DOWN);
-                        head.move();
-                    }
+                    case DOWN:
+                        ((ControllableSnake) playable).setLastInput(Direction.DOWN);
                         break;
-                    case LEFT:  if (((MySnake) head).getCurrentDirection() != Direction.RIGHT) {
-                        ((MySnake) head).setCurrentDirection(Direction.LEFT);
-                        head.move();
-                    }
+                    case LEFT:
+                        ((ControllableSnake) playable).setLastInput(Direction.LEFT);
                         break;
-                    case RIGHT:  if (((MySnake) head).getCurrentDirection() != Direction.LEFT) {
-                        ((MySnake) head).setCurrentDirection(Direction.RIGHT);
-                        head.move();
-                    }
+                    case RIGHT:
+                        ((ControllableSnake) playable).setLastInput(Direction.RIGHT);
                         break;
+                }
+                for(Snake s:snakeList){
+                    s.choseDirection(null);
+                    s.move();
                 }
             }
         });

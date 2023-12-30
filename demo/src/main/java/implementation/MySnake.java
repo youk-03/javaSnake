@@ -2,6 +2,7 @@ package implementation;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import lib.Grid;
 import lib.Position;
 import lib.Screen;
 import lib.Snake;
@@ -17,17 +18,17 @@ public class MySnake implements Snake {
     private static MySnake last;
 
     private Circle segment;
-   private Direction currentDirection;
+    private double currentDirection;
 
     final double velocity= radius*2;
 
-
-    public MySnake(Position<Double> pos, boolean isHead){
-        currentDirection = null;
+    /**Create a head a snake*/
+    public MySnake(Position<Double> pos){
+        currentDirection = 0.;
         this.next= null;
         this.previous= null;
         this.position= pos;
-        this.isHead = isHead;
+        this.isHead = true;
         segment = null;
         if(isHead){
             last = this;
@@ -35,12 +36,13 @@ public class MySnake implements Snake {
 
     }
 
-    public MySnake(MySnake previous,MySnake next,Position<Double> pos, boolean isHead){
-        currentDirection = null;
+    /**Create a snake cell*/
+    public MySnake(MySnake previous,MySnake next,Position<Double> pos){
+        currentDirection = 0.;
         this.previous= previous;
         this.next= next;
         this.position= pos;
-        this.isHead = isHead;
+        this.isHead = false;
         segment = null;
         if(isHead){
             last = this;
@@ -63,7 +65,7 @@ public class MySnake implements Snake {
         segment.setCenterY(position.getY());
         segment.setRadius(radius);
         if (isHead()){
-            segment.setFill(Color.GREEN);
+            segment.setFill(Color.DARKGREEN);
         } else {
             segment.setFill(Color.FORESTGREEN);
         }
@@ -109,13 +111,13 @@ public class MySnake implements Snake {
             Position<Double> posNew = new MyPosition(
                     posSegm.getX() + (posSegm.getX() - posSegmPrev.getX()),
                     posSegm.getY() + (posSegm.getY() - posSegmPrev.getY()));
-            segment.next = new MySnake(segment, null, posNew, false);
+            segment.next = new MySnake(segment, null, posNew);
         }
         else {
             if(segment.isHead) {
                 Position<Double> pos = this.position;
                 Position<Double> posNew = new MyPosition(pos.getX() - (segment.radius * 2), pos.getY());
-                segment.next = new MySnake(segment, null, posNew, false);
+                segment.next = new MySnake(segment, null, posNew);
             }
         }
         last = segment.next;
@@ -128,51 +130,43 @@ public class MySnake implements Snake {
         previous.next=null;
     }
 
-    public void setCurrentDirection(Direction dir){
-        currentDirection = dir;
+    @Override
+    public double getX() {
+        return position.getX();
     }
 
-    public Direction getCurrentDirection() {
+    @Override
+    public double getY() {
+        return position.getY();
+    }
+
+    @Override
+    public void setPosition(double x, double y) {
+        position.setXY(x,y);
+    }
+
+    @Override
+    public double getVelocity() {
+        return velocity;
+    }
+
+    @Override
+    public double getDirection() {
         return currentDirection;
     }
 
+    @Override
+    public void choseDirection(Grid grid) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void setCurrentDirection(double direction){
+        currentDirection = Math.toRadians(direction);
+    }
 
     public void moveCircle(){
         this.segment.setCenterX(this.position.getX());
         this.segment.setCenterY(this.position.getY());
-    }
-
-
-    public void move(){
-        MySnake tmp = last;
-        if(!isHead){
-            throw new InvalidParameterException();
-        }
-        if(currentDirection == null){
-           throw new NullPointerException();
-        }
-        switch (currentDirection){ //border of the screen test
-            case UP: if(this.position.getY()-velocity<0) return; break;
-            case DOWN: if(this.position.getY()+velocity>lib.SlitherScene.windowHeight) return; break;
-            case LEFT: if(this.position.getX()-velocity<0) return; break;
-            case RIGHT:if(this.position.getX()+velocity>lib.SlitherScene.windowWidth) return; break;
-        }
-        while(tmp != this){ //moving the segment
-            System.out.println("ah");
-            tmp.position.setY(tmp.previous.position.getY());
-            tmp.position.setX(tmp.previous.position.getX());
-            tmp.moveCircle();
-            tmp = tmp.previous;
-        }
-        switch (currentDirection){ //moving the head
-            case UP: tmp.position.setY(this.position.getY()-velocity); break;
-            case DOWN: tmp.position.setY(this.position.getY()+velocity); break;
-            case LEFT: tmp.position.setX(this.position.getX()-velocity);break;
-            case RIGHT:tmp.position.setX(this.position.getX()+velocity); break;
-        }
-        tmp.moveCircle();
-
-
     }
 }
 

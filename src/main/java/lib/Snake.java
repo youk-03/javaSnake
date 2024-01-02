@@ -26,29 +26,33 @@ public interface Snake extends GraphicalObject{
     abstract double getY();
     abstract void setPosition(double x, double y);
     abstract double getVelocity();
-    abstract double getDirection();
 
-    /** Ask the snake to choose a new direction
+    /**Return the vector of the current direction of the snake. Only got sense for the head.*/
+    abstract Position getDirection();
+
+    /** Ask the snake to update its currentDirection. Only got sense for the head.
      * @param grid the grid where the snake evolve*/
     abstract void choseDirection(Grid grid);
 
-    /** Change the Position of every Snake part, needs to be called on the head !
-     */
+    /** Change the Position of every Snake part, needs to be called on the head !*/
     default void move(){
         Snake tmp = this.last();
-        if(!isHead()){
+        if(!this.isHead()){
             throw new InvalidParameterException();
         }
-        while(tmp != this){ //moving the segment
+        while(tmp.prev() != null){ //moving the segment
             tmp.setPosition(tmp.prev().getX(),tmp.prev().getY());
             tmp.moveCircle();
             tmp = tmp.prev();
         }
         //moving the head
-        tmp.setPosition(
-                getX()+(getVelocity()*Math.cos(getDirection())),
-                getY()+(getVelocity()*Math.sin(getDirection())));
-        tmp.moveCircle();
+        double velocity= getVelocity();
+        Position dir= getDirection();
+        Position pos= getPos();
+        this.setPosition(
+                pos.getX()+dir.getX(),
+                pos.getY()+dir.getY());
+        this.moveCircle();
     }
     /** change the pos of the circle of this on the scene */
     abstract void moveCircle();

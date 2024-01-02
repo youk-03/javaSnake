@@ -15,6 +15,7 @@ public class MyRandomSnake extends MySnake {
     @Override
     public void choseDirection(Grid grid){
         Random rand= new Random();
-        setCurrentDirection((rand.nextDouble()*360) % 360);
+        Position pos= this.getPos();
+        setCurrentDirection(new MyPosition(rand.nextInt()- pos.getX(),rand.nextInt() - pos.getY()));
     }
 }

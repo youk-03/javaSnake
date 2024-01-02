@@ -7,6 +7,8 @@ import lib.Position;
 import lib.Screen;
 import lib.Snake;
 
+import java.security.InvalidParameterException;
+
 public class MySnake implements Snake {
     private Position<Double> position;
     private final Double radius= 5.0;
@@ -16,13 +18,13 @@ public class MySnake implements Snake {
     private static MySnake last;
 
     private Circle segment;
-    private double currentDirection;
+    private Position<Double> currentDirection;
 
     final double velocity= radius*2;
 
     /**Create a head a snake*/
     public MySnake(Position<Double> pos){
-        currentDirection = 0.;
+        currentDirection = new MyPosition(0,0);
         this.next= null;
         this.previous= null;
         this.position= pos;
@@ -36,7 +38,6 @@ public class MySnake implements Snake {
 
     /**Create a snake cell*/
     public MySnake(MySnake previous,MySnake next,Position<Double> pos){
-        currentDirection = 0.;
         this.previous= previous;
         this.next= next;
         this.position= pos;
@@ -149,8 +150,9 @@ public class MySnake implements Snake {
     }
 
     @Override
-    public double getDirection() {
-        return currentDirection;
+    public Position getDirection() {
+        if(!isHead()) throw new InvalidParameterException();
+        return new MyPosition(currentDirection.getX(),currentDirection.getY());
     }
 
     @Override
@@ -158,8 +160,8 @@ public class MySnake implements Snake {
         throw new UnsupportedOperationException();
     }
 
-    public void setCurrentDirection(double direction){
-        currentDirection = Math.toRadians(direction);
+    public void setCurrentDirection(Position pos){
+        currentDirection = new MyPosition(pos.getX(),pos.getY());
     }
 
     public void moveCircle(){

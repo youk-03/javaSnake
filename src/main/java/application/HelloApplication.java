@@ -1,15 +1,13 @@
 package application;
 
+import implementation.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.IOException;
-import implementation.ControllableSnake;
-import implementation.MyPosition;
-import implementation.MySlitherScene;
-import implementation.PaneScreen;
+
 import lib.SlitherScene;
 import lib.Snake;
 import java.util.ArrayList;
@@ -18,15 +16,19 @@ import java.util.List;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        ControllableSnake head = new ControllableSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
+        ArrowSnake head = new ArrowSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
+        MyRandomSnake ia = new MyRandomSnake(new MyPosition(0, 0));
+        List<Snake> snakes= new ArrayList<>();
+        snakes.add(head);
+        snakes.add(ia);
         PaneScreen canvas = new PaneScreen();
-        head.display(canvas);
+        for(Snake s:snakes){
+            s.display(canvas);
+        }
 
         //Scene scene = new Scene(fxmlLoader.load(), 1200, 600);
         //Scene scene = new Scene(canvas, Screen.getPrimary().getBounds().getWidth(),Screen.getPrimary().getBounds().getHeight()-20); //padding dans fxml
         MySlitherScene scene = new MySlitherScene(canvas);
-        List<Snake> snakes= new ArrayList<>();
-        snakes.add(head);
         scene.init(snakes);
 
 

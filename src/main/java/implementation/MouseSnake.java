@@ -16,10 +16,10 @@ public class MouseSnake extends MySnake{
 
     @Override
     public void choseDirection(Grid grid) {
-        if (lastDirection == null) setCurrentDirection(new MyPosition(0, 0));
+        Position pos= this.getPos();
+        if (lastDirection == null) setCurrentDirection(new MyPosition(pos.getX(), pos.getY()));
         else {
             Position mousePos= adapter.posOfMouse();
-            Position pos= this.getPos();
             new MyPosition(
                     mousePos.getX() - pos.getX(),
                     mousePos.getY() - pos.getY());

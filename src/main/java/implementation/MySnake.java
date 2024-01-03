@@ -16,6 +16,7 @@ public class MySnake implements Snake {
     private MySnake next;
     private MySnake previous;
     private static MySnake last;
+    private Color headColor= Color.DARKGREEN, bodyColor= Color.FORESTGREEN;
 
     private Circle segment;
     private Position<Double> currentDirection;
@@ -33,7 +34,6 @@ public class MySnake implements Snake {
         if(isHead){
             last = this;
         }
-
     }
 
     /**Create a snake cell*/
@@ -64,9 +64,9 @@ public class MySnake implements Snake {
         segment.setCenterY(position.getY());
         segment.setRadius(radius);
         if (isHead()){
-            segment.setFill(Color.DARKGREEN);
+            segment.setFill(headColor);
         } else {
-            segment.setFill(Color.FORESTGREEN);
+            segment.setFill(bodyColor);
         }
         screen.add(segment);
     }
@@ -167,6 +167,11 @@ public class MySnake implements Snake {
     public void moveCircle(){
         this.segment.setCenterX(this.position.getX());
         this.segment.setCenterY(this.position.getY());
+    }
+
+    public void setColor(Color head, Color body){
+        headColor= head;
+        bodyColor= body;
     }
 }
 

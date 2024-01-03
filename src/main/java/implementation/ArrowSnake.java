@@ -13,14 +13,12 @@ public class ArrowSnake extends ControllableSnake<Direction>{
     @Override
     public void choseDirection(Grid grid) {
         Position pos= this.getPos();
-        if (lastInput == null) setCurrentDirection(new MyPosition(pos.getX(), pos.getY()));
-        else {
-            switch (lastInput){
+        switch (lastInput()){
                 case UP: setCurrentDirection(new MyPosition(pos.getX(), pos.getY()-1)); break;
                 case DOWN: setCurrentDirection(new MyPosition(pos.getX(),pos.getY()+1));break;
                 case LEFT: setCurrentDirection(new MyPosition(pos.getX()-1,pos.getY()));break;
                 case RIGHT:setCurrentDirection(new MyPosition(pos.getX()+1,pos.getY()));break;
-            }
+                default: setCurrentDirection(new MyPosition(pos.getX(), pos.getY())); break;
         }
     }
 }

@@ -15,4 +15,6 @@ public abstract class SlitherScene extends Scene {
 
     /** to add the listener and every necessary things to the scene */
     protected abstract void init(List<Snake> snakes);
+
+    public abstract Position getMousePos();
 }

@@ -16,19 +16,20 @@ import java.util.List;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        ArrowSnake head = new ArrowSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
+        PaneScreen canvas = new PaneScreen();
+        MySlitherScene scene = new MySlitherScene(canvas);
+        //ArrowSnake head = new ArrowSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
+        MouseSnake head = new MouseSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
         MyRandomSnake ia = new MyRandomSnake(new MyPosition(0, 0));
         List<Snake> snakes= new ArrayList<>();
         snakes.add(head);
         snakes.add(ia);
-        PaneScreen canvas = new PaneScreen();
         for(Snake s:snakes){
             s.display(canvas);
         }
 
         //Scene scene = new Scene(fxmlLoader.load(), 1200, 600);
         //Scene scene = new Scene(canvas, Screen.getPrimary().getBounds().getWidth(),Screen.getPrimary().getBounds().getHeight()-20); //padding dans fxml
-        MySlitherScene scene = new MySlitherScene(canvas);
         scene.init(snakes);
 
 

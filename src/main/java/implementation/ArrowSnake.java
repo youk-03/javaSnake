@@ -3,16 +3,11 @@ package implementation;
 import lib.Grid;
 import lib.Position;
 
-public class ArrowSnake extends MySnake{
+public class ArrowSnake extends ControllableSnake<Direction>{
     Direction lastInput;
 
     public ArrowSnake(Position<Double> pos) {
         super(pos);
-        this.lastInput= null;
-    }
-
-    public void setLastInput(Direction lastInput) {
-        this.lastInput = lastInput;
     }
 
     @Override

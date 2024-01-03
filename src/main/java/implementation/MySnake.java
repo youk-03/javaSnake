@@ -21,7 +21,7 @@ public class MySnake implements Snake {
     private Circle segment;
     private Position<Double> currentDirection;
 
-    final double velocity= radius*2;
+    final double velocity= 1;
 
     /**Create a head a snake*/
     public MySnake(Position<Double> pos){

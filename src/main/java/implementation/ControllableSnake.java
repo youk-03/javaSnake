@@ -3,7 +3,7 @@ package implementation;
 import lib.Position;
 
 public class ControllableSnake<T> extends MySnake{
-    T lastInput;
+   private T lastInput;
 
     public ControllableSnake(Position<Double> pos) {
         super(pos);

@@ -24,7 +24,6 @@ public interface Snake extends GraphicalObject{
 
     abstract double getX();
     abstract double getY();
-    abstract void setPosition(double x, double y);
     abstract double getVelocity();
 
     /**Return position toward the snake go.*/
@@ -46,24 +45,41 @@ public interface Snake extends GraphicalObject{
 
     /** Change the Position of every Snake part, needs to be called on the head !*/
     default void move(){
+
         Snake tmp = this.last();
         if(!this.isHead()){
             throw new InvalidParameterException();
         }
+
+        Position dir= getDirection();
+        Position pos= getPos();
+        double[] vector= velocityVector(pos.getX(), pos.getY(), dir.getX(), dir.getY(), this.getVelocity());
+
+        if(pos.getX()+ vector[0]> SlitherScene.windowWidth || pos.getX()+ vector[0]<0 || pos.getY()+ vector[1]>SlitherScene.windowHeight || pos.getY()+ vector[1] < 0){
+            return;
+        }
+
         while(tmp.prev() != null){ //moving the segment
             tmp.setPosition(tmp.prev().getX(),tmp.prev().getY());
             tmp.moveCircle();
             tmp = tmp.prev();
         }
         //moving the head
-        Position dir= getDirection();
-        Position pos= getPos();
-        double[] vector= velocityVector(pos.getX(), pos.getY(), dir.getX(), dir.getY(), this.getVelocity());
+
         this.setPosition(
                 pos.getX()+ vector[0],
                 pos.getY()+ vector[1]);
+
+       if(this.isDead()){
+           System.out.println("dead");
+           System.exit(1); /////////////////////////////////////////////
+       }
+
         this.moveCircle();
     }
+
+    public boolean isDead();
+
     /** change the pos of the circle of this on the scene */
     abstract void moveCircle();
 

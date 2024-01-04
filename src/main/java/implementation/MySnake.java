@@ -2,10 +2,9 @@ package implementation;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import lib.Grid;
-import lib.Position;
-import lib.Screen;
-import lib.Snake;
+import lib.*;
+
+import java.util.ArrayList;
 
 import java.security.InvalidParameterException;
 
@@ -21,7 +20,7 @@ public class MySnake implements Snake {
     private Circle segment;
     private Position<Double> currentDirection;
 
-    final double velocity= 1;
+    final double velocity= radius*2;
 
     /**Create a head a snake*/
     public MySnake(Position<Double> pos){
@@ -81,6 +80,7 @@ public class MySnake implements Snake {
     public Double getRadius() {
         return radius;
     }
+
 
     @Override
     public boolean isHead() {
@@ -172,6 +172,53 @@ public class MySnake implements Snake {
     public void setColor(Color head, Color body){
         headColor= head;
         bodyColor= body;
+    }
+
+    public boolean isTouching(GraphicalObject obj){
+        //comparer avec this
+        double xObj = obj.getPos().getX();
+        double yObj = obj.getPos().getY();
+
+        if(!this.isHead){
+            throw new IllegalCallerException();
+        }
+
+       /* //head touche d'en haut ou d'en bas
+        if(this.getY() - (radius*2) == yObj || this.getY() + (radius*2) == yObj) {
+            if(this.getX() >= xObj - radius && this.getX() <= xObj + radius) return true;
+        }
+
+        //head touche de la droite ou de la gauche
+        else if(this.getX() - (radius*2) == xObj || this.getX() + (radius*2) == xObj){
+            if(this.getY() >= yObj - radius && this.getY() <= yObj + radius) return true;
+        }*/
+
+        if(this.getX() == xObj && this.getY() == yObj) return true;
+
+        return false;
+    }
+
+    public boolean isDead(){
+        //compare avec tout les segment du serpent en appelant isTouching
+        if(!this.isHead){
+            throw new IllegalCallerException();
+        }
+        Snake tmp = this.next;
+
+        while(tmp != null){
+
+            if(this.isTouching(tmp)) { return true; }
+
+            tmp = tmp.next();
+
+        }
+
+        return false;
+    }
+
+    public boolean isTouchingSom (ArrayList<GraphicalObject> list){
+        //pour fruit potentiels obstacle
+        return false;
     }
 }
 

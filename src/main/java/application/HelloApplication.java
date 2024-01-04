@@ -18,15 +18,17 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         PaneScreen canvas = new PaneScreen();
         MySlitherScene scene = new MySlitherScene(canvas);
-        //ArrowSnake head = new ArrowSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
-        MouseSnake head = new MouseSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
+        ArrowSnake head = new ArrowSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
+        //MouseSnake head = new MouseSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
         MyRandomSnake ia = new MyRandomSnake(new MyPosition(0, 0));
-        List<Snake> snakes= new ArrayList<>();
+        ArrayList<Snake> snakes= new ArrayList<>();
         snakes.add(head);
-        snakes.add(ia);
+       // snakes.add(ia);
         for(Snake s:snakes){
             s.display(canvas);
         }
+
+        MyFruit.init(canvas,snakes);
 
         //Scene scene = new Scene(fxmlLoader.load(), 1200, 600);
         //Scene scene = new Scene(canvas, Screen.getPrimary().getBounds().getWidth(),Screen.getPrimary().getBounds().getHeight()-20); //padding dans fxml
@@ -35,12 +37,9 @@ public class HelloApplication extends Application {
 
         Button addtail = new Button("Add Segment");
         addtail.relocate(SlitherScene.windowWidth/2,20);
-        addtail.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                head.add();
-                head.last().display(canvas);
-            }
+        addtail.setOnAction(actionEvent -> {
+            head.add();
+            head.last().display(canvas);
         });
         addtail.setFocusTraversable(false);
         canvas.add(addtail);

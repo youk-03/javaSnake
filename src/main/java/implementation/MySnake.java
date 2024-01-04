@@ -7,6 +7,7 @@ import lib.*;
 import java.util.ArrayList;
 
 import java.security.InvalidParameterException;
+import java.util.List;
 
 public class MySnake implements Snake {
     private Position<Double> position;
@@ -38,6 +39,7 @@ public class MySnake implements Snake {
     /**Create a snake cell*/
     public MySnake(MySnake previous,MySnake next,Position<Double> pos){
         this.previous= previous;
+        this.previous.next= this;
         this.next= next;
         this.position= pos;
         this.isHead = false;
@@ -98,30 +100,24 @@ public class MySnake implements Snake {
     }
     @Override
     public void add() {
-        MySnake segment= this;
-
-        if(segment.next != null) {
-
-            while (segment.next() != null) {
-                segment = (MySnake) segment.next();
-            }
-            Position<Double> posSegm = segment.position;
-            Position<Double> posSegmPrev = segment.previous.position;
-            Position<Double> posNew = new MyPosition(
+        if(this.next != null) {
+            Position posSegm = last.getPos();
+            Position posSegmPrev = last.prev().getPos();
+            Position<Double> posNew= new MyPosition(
                     posSegm.getX() + (posSegm.getX() - posSegmPrev.getX()),
                     posSegm.getY() + (posSegm.getY() - posSegmPrev.getY()));
-            segment.next = new MySnake(segment, null, posNew);
+            last= new MySnake(last, null, posNew);
         }
         else {
-            if(segment.isHead) {
-                Position<Double> pos = this.position;
-                Position<Double> posNew = new MyPosition(pos.getX() - (segment.radius * 2), pos.getY());
-                segment.next = new MySnake(segment, null, posNew);
+            if(this.isHead) {
+                double[] vpos= Utils.velocityVector(position.getX(),position.getY(),currentDirection.getX(), currentDirection.getY(), velocity);
+                Position<Double> posNew = new MyPosition(
+                        position.getX() + vpos[0],
+                        position.getY() + vpos[1]);
+                last= new MySnake(this, null, posNew);
             }
         }
-        last = segment.next;
-
-        }
+    }
 
 
     @Override
@@ -161,7 +157,8 @@ public class MySnake implements Snake {
     }
 
     public void setCurrentDirection(Position pos){
-        currentDirection = new MyPosition(pos.getX(),pos.getY());
+        if(pos == null) currentDirection= null;
+        else currentDirection = new MyPosition(pos.getX(),pos.getY());
     }
 
     public void moveCircle(){
@@ -183,18 +180,18 @@ public class MySnake implements Snake {
             throw new IllegalCallerException();
         }
 
-        if(yObj - (radius*2) <= this.getY() && this.getY() <= yObj + (radius*2)){
+        double rad= radius -1;
+        if(yObj - (rad+obj.getRadius()) <= this.getY() && this.getY() <= yObj + (rad+obj.getRadius())){
 
-            if(xObj + radius >= this.getX() && this.getX() >= xObj - radius) return true;
-
-        }
-
-        else if(xObj - (radius*2) <= this.getX() && this.getX() <= xObj + (radius*2)){
-
-            if(yObj + radius >= this.getY() && this.getY() >= yObj - radius) return true;
+            if(xObj + rad >= this.getX() && this.getX() >= xObj - rad) return true;
 
         }
 
+        else if(xObj - (rad+obj.getRadius()) <= this.getX() && this.getX() <= xObj + (rad+obj.getRadius())){
+
+            if(yObj + rad >= this.getY() && this.getY() >= yObj - rad) return true;
+
+        }
         return false;
     }
 
@@ -204,29 +201,22 @@ public class MySnake implements Snake {
             throw new IllegalCallerException();
         }
         Snake tmp = this.next;
-
         while(tmp != null){
-
-            if(this.getX() == tmp.getX() && this.getY() == tmp.getY()) { return true; }
-
+            if(this.isTouching(tmp)) { return true; }
             tmp = tmp.next();
-
         }
-
         return false;
     }
 
-    public boolean isTouchingSom (ArrayList<Fruit> list){ //faire disparaitre le fruit + changer ses val + head.add + head.last.display (:
+    public boolean isTouchingSom (List<Fruit> list){ //faire disparaitre le fruit + changer ses val + head.add + head.last.display (:
         if(!this.isHead){
             throw new IllegalCallerException();
         }
         for (Fruit g: list) {
-
             if(this.isTouching(g)) {
                 g.setInvisible();
                 return true;
             }
-
         }
         return false;
     }

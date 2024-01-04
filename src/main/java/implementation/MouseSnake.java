@@ -5,7 +5,7 @@ import lib.Position;
 import lib.SlitherAdapter;
 import lib.SlitherScene;
 
-public class MouseSnake extends ControllableSnake<Position>{
+public class MouseSnake extends MyControllableSnake<Position>{
     public MouseSnake(Position<Double> pos) {
         super(pos);
     }
@@ -14,9 +14,13 @@ public class MouseSnake extends ControllableSnake<Position>{
     public void choseDirection(Grid grid) {
         Position mousePos= lastInput();
         if (mousePos == null){
-            Position pos= this.getPos();
-            setCurrentDirection(new MyPosition(pos.getX(), pos.getY()));
+            setCurrentDirection(null);
         }
+        Position pos= this.getPos();
+        double dx= pos.getX()-mousePos.getX();
+        double dy= pos.getY()-mousePos.getY();
+        double rad= getRadius();
+        if((dy<rad && dy>-rad) || (dx<rad && dx>-rad)) setCurrentDirection(null);
         else {
             setCurrentDirection(new MyPosition(mousePos.getX(), mousePos.getY()));
         }

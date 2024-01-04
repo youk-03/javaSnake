@@ -4,8 +4,7 @@ import lib.GraphicalObject;
 import lib.Position;
 import lib.SlitherScene;
 import lib.Snake;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public class MyPosition implements Position<Double> {
     private double x;
@@ -52,7 +51,7 @@ public class MyPosition implements Position<Double> {
         return position.getX().equals(this.getX()) && position.getY().equals(this.getY());
     }
 
-    public boolean isValid(ArrayList<GraphicalObject> e){
+    public boolean isValid(List<GraphicalObject> e){
 
         for (GraphicalObject g: e) {
             if(this.equals(g.getPos())) return false;

@@ -3,7 +3,7 @@ package implementation;
 import lib.Grid;
 import lib.Position;
 
-public class ArrowSnake extends ControllableSnake<Direction>{
+public class ArrowSnake extends MyControllableSnake<Direction>{
     Direction lastInput;
 
     public ArrowSnake(Position<Double> pos) {

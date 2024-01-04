@@ -1,6 +1,6 @@
 package lib;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface Position<T extends Double> {
     abstract T getX();
@@ -9,7 +9,7 @@ public interface Position<T extends Double> {
     abstract void setY(T y);
     abstract void setXY(T x,T y);
 
-    abstract boolean isValid(ArrayList<GraphicalObject> e);
+    abstract boolean isValid(List<GraphicalObject> e);
 
     abstract boolean isValid(Snake head);
 }

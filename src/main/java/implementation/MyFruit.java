@@ -5,6 +5,7 @@ import javafx.scene.shape.Circle;
 import lib.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MyFruit implements Fruit {
@@ -16,20 +17,20 @@ public class MyFruit implements Fruit {
 
     private static int visibleFruit = 10;
 
-    private static final Color[] possibleColor = {Color.BLUE, Color.BLUEVIOLET, Color.CRIMSON, Color.CHOCOLATE, Color.DEEPPINK};
+    private static final Color[] possibleColor = {Color.BLUE, Color.BLUEVIOLET, Color.CHOCOLATE, Color.DEEPPINK};
 
-    private static ArrayList<Fruit> listFruit = new ArrayList<>();
+    private static List<Fruit> listFruit = new ArrayList<>();
     public MyFruit (double x, double y) {
         pos = new MyPosition(x,y);
         fruit = new Circle();
         fruit.setCenterY(y);
         fruit.setCenterX(x);
         fruit.setRadius(radius);
-        fruit.setFill(possibleColor[(int)(Math.random()*5)]);
+        fruit.setFill(possibleColor[(int)(Math.random()*possibleColor.length)]);
         fruit.setVisible(false);
     }
 
-   public static void init(Screen screen, ArrayList<Snake> snakes){ //to call only one time at first, init with 50 fruit
+   public static void init(Screen screen, List<Snake> snakes){ //to call only one time at first, init with 50 fruit
         MyFruit f = null;
         for(int i=0; i<50; i++){
             f = new MyFruit(-1,-1);
@@ -89,7 +90,7 @@ public class MyFruit implements Fruit {
         fruit.setCenterY(this.getPos().getY());
     }
 
-    public static ArrayList<Fruit> getListFruit() {
+    public static List<Fruit> getListFruit() {
         return listFruit;
     }
 }

@@ -1,8 +1,6 @@
 package lib;
 
 import implementation.MyPosition;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public interface Fruit extends GraphicalObject{
@@ -12,7 +10,7 @@ public interface Fruit extends GraphicalObject{
 
     abstract void setVisible();
 
-    public static void displayAFruit(ArrayList<Fruit> listFruit, List<Snake> snakes){
+    public static void displayAFruit(List<Fruit> listFruit, List<Snake> snakes){
         boolean test = false;
         for (Fruit f: listFruit) {
             if(!f.isVisible()){

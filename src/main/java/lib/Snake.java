@@ -1,8 +1,10 @@
 package lib;
 
+import implementation.MyFruit;
 import javafx.scene.shape.Circle;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 
 public interface Snake extends GraphicalObject{
     /**@return return true if the segment of the snake is the head*/
@@ -79,6 +81,8 @@ public interface Snake extends GraphicalObject{
     }
 
     public boolean isDead();
+
+    abstract boolean isTouchingSom (ArrayList<Fruit> list);
 
     /** change the pos of the circle of this on the scene */
     abstract void moveCircle();

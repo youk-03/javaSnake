@@ -32,7 +32,7 @@ public class HelloApplication extends Application {
 
         //Scene scene = new Scene(fxmlLoader.load(), 1200, 600);
         //Scene scene = new Scene(canvas, Screen.getPrimary().getBounds().getWidth(),Screen.getPrimary().getBounds().getHeight()-20); //padding dans fxml
-        scene.init(snakes);
+        scene.init(snakes, MyFruit.getListFruit());
 
 
         Button addtail = new Button("Add Segment");

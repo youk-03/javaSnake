@@ -2,12 +2,10 @@ package implementation;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import lib.Fruit;
-import lib.Position;
-import lib.Screen;
-import lib.Snake;
+import lib.*;
 
 import java.util.ArrayList;
+
 
 public class MyFruit implements Fruit {
 
@@ -74,6 +72,8 @@ public class MyFruit implements Fruit {
     @Override
     public void setInvisible(){
         fruit.setVisible(false); //CHANGER SES VAL DECREMENT ISVISIBLE
+        this.setPosition(-1,-1);
+        this.setFruitPos();
     }
 
 
@@ -89,5 +89,7 @@ public class MyFruit implements Fruit {
         fruit.setCenterY(this.getPos().getY());
     }
 
-
+    public static ArrayList<Fruit> getListFruit() {
+        return listFruit;
+    }
 }

@@ -183,23 +183,23 @@ public class MySnake implements Snake {
             throw new IllegalCallerException();
         }
 
-       /* //head touche d'en haut ou d'en bas
-        if(this.getY() - (radius*2) == yObj || this.getY() + (radius*2) == yObj) {
-            if(this.getX() >= xObj - radius && this.getX() <= xObj + radius) return true;
+        if(yObj - (radius*2) <= this.getY() && this.getY() <= yObj + (radius*2)){
+
+            if(xObj + radius >= this.getX() && this.getX() >= xObj - radius) return true;
+
         }
 
-        //head touche de la droite ou de la gauche
-        else if(this.getX() - (radius*2) == xObj || this.getX() + (radius*2) == xObj){
-            if(this.getY() >= yObj - radius && this.getY() <= yObj + radius) return true;
-        }*/
+        else if(xObj - (radius*2) <= this.getX() && this.getX() <= xObj + (radius*2)){
 
-        if(this.getX() == xObj && this.getY() == yObj) return true;
+            if(yObj + radius >= this.getY() && this.getY() >= yObj - radius) return true;
+
+        }
 
         return false;
     }
 
     public boolean isDead(){
-        //compare avec tout les segment du serpent en appelant isTouching
+        //compare avec tout les segment du serpent , a appelé avant de bouger le serpent une fois que la nouvelle pos a été calculée
         if(!this.isHead){
             throw new IllegalCallerException();
         }
@@ -207,7 +207,7 @@ public class MySnake implements Snake {
 
         while(tmp != null){
 
-            if(this.isTouching(tmp)) { return true; }
+            if(this.getX() == tmp.getX() && this.getY() == tmp.getY()) { return true; }
 
             tmp = tmp.next();
 
@@ -216,10 +216,19 @@ public class MySnake implements Snake {
         return false;
     }
 
-    public boolean isTouchingSom (ArrayList<GraphicalObject> list){
-        //pour fruit potentiels obstacle
+    public boolean isTouchingSom (ArrayList<Fruit> list){ //faire disparaitre le fruit + changer ses val + head.add + head.last.display (:
+        if(!this.isHead){
+            throw new IllegalCallerException();
+        }
+        for (Fruit g: list) {
+
+            if(this.isTouching(g)) {
+                g.setInvisible();
+                return true;
+            }
+
+        }
         return false;
     }
 }
 
-//TODO faire un main pour le 1.

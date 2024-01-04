@@ -3,20 +3,21 @@ package implementation;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import lib.Position;
-import lib.SlitherScene;
-import lib.Snake;
+import lib.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySlitherScene extends SlitherScene {
     private Position<Double> mousePos;
+    private  PaneScreen pane;
     public MySlitherScene(PaneScreen pane) {
         super(pane);
+        this.pane = pane;
     }
 
     @Override
-    public void init(List<Snake> snakeList) {
+    public void init(List<Snake> snakeList, ArrayList<Fruit> fruitList) {
         Snake playable= snakeList.get(0);
         mousePos= new MyPosition(0,0);
         if(!(playable instanceof ControllableSnake)){
@@ -58,6 +59,16 @@ public class MySlitherScene extends SlitherScene {
                     for (Snake s:snakeList){
                         s.choseDirection(null);
                         s.move();
+                        //if snake is touching a fruit add a segment to snake and display it
+
+                        if(s.isTouchingSom(fruitList)){
+                            s.add();
+                            s.last().display(pane);
+                            //add a new fruits to map
+                            Fruit.displayAFruit(fruitList,snakeList);
+                        }
+
+
                     }
                 }
             });

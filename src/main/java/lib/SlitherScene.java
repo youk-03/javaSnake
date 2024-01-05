@@ -3,8 +3,6 @@ package lib;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SlitherScene extends Scene {
@@ -18,4 +16,7 @@ public abstract class SlitherScene extends Scene {
     protected abstract void init(List<Snake> snakes, List<Fruit> fruitList);
 
     public abstract Position getMousePos();
+
+    public abstract List<Snake> getSnakeList();
+    public abstract List<Fruit> getFruitList();
 }

@@ -1,6 +1,5 @@
 package lib;
 import javafx.scene.input.InputEvent;
-
 import java.util.EventListener;
 
 public interface SlitherAdapter {

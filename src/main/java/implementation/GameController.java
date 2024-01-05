@@ -30,11 +30,11 @@ public class GameController implements Initializable {
         //initialise le jeu et lance la while true
         //ArrowSnake head = new ArrowSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
         MouseSnake head = new MouseSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
-        //MyRandomSnake ia = new MyRandomSnake(new MyPosition(0, 0));
+        IaSnake ia = new IaSnake(new MyPosition(10, 10));
 
         snakeList= new ArrayList<>();
         snakeList.add(head);
-        //snakes.add(ia);
+        snakeList.add(ia);
         for(Snake s:snakeList){
             s.display(pane);
         }
@@ -54,7 +54,7 @@ public class GameController implements Initializable {
 
     public void play(){
         for (Snake s:snakeList){
-            s.choseDirection(null);
+            s.choseDirection(scene);
             s.move();
             //if snake is touching a fruit add a segment to snake and display it
 

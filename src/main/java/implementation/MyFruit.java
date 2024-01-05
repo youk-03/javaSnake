@@ -3,7 +3,6 @@ package implementation;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import lib.*;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,12 +1,7 @@
 package lib;
 
-import implementation.MyFruit;
-import implementation.MyPosition;
-import implementation.MySnake;
 import javafx.scene.shape.Circle;
-
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface Snake extends GraphicalObject{
@@ -34,9 +29,12 @@ public interface Snake extends GraphicalObject{
     /**Return position toward the snake go.*/
     abstract Position getDirection();
 
-    /** Ask the snake to update its currentDirection. Only got sense for the head.
-     * @param grid the grid where the snake evolve*/
-    abstract void choseDirection(Grid grid);
+    /**
+     * Ask the snake to update its currentDirection. Only got sense for the head.
+     *
+     * @param scene the scene where the snake evolve
+     */
+    abstract void choseDirection(SlitherScene scene);
 
     /** Change the Position of every Snake part, needs to be called on the head ! If direction null, the snake doesn't move.*/
     default void move(){
@@ -63,6 +61,11 @@ public interface Snake extends GraphicalObject{
         this.setPosition(
                 pos.getX()+ vector[0],
                 pos.getY()+ vector[1]);
+        Snake next= this.next();
+        if(next != null && this.isTouching(this.next())) {
+            this.setPosition(pos.getX(), pos.getY());
+            return;
+        }
         this.moveCircle();
        if(this.isDead() && this instanceof ControllableSnake<?>){
            ///////////////TODO///////////////////
@@ -72,7 +75,7 @@ public interface Snake extends GraphicalObject{
     }
 
     public boolean isDead();
-
+    abstract boolean isTouching (GraphicalObject obj);
     abstract boolean isTouchingSom (List<Fruit> list);
 
     /** change the pos of the circle of this on the scene */

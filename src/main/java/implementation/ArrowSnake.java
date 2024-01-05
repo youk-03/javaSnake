@@ -1,7 +1,7 @@
 package implementation;
 
-import lib.Grid;
 import lib.Position;
+import lib.SlitherScene;
 
 public class ArrowSnake extends MyControllableSnake<Direction>{
     Direction lastInput;
@@ -11,7 +11,7 @@ public class ArrowSnake extends MyControllableSnake<Direction>{
     }
 
     @Override
-    public void choseDirection(Grid grid) {
+    public void choseDirection(SlitherScene scene) {
         Position pos= this.getPos();
         switch (lastInput()){
                 case UP: setCurrentDirection(new MyPosition(pos.getX(), pos.getY()-1)); break;

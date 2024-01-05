@@ -2,18 +2,12 @@ package application;
 
 import implementation.*;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.IOException;
-
 import lib.SlitherScene;
 import lib.Snake;
 import java.util.ArrayList;
-import java.util.List;
-
-import static java.lang.Thread.sleep;
 
 public class HelloApplication extends Application {
     @Override

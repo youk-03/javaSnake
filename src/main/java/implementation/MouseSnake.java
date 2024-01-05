@@ -1,8 +1,6 @@
 package implementation;
 
-import lib.Grid;
 import lib.Position;
-import lib.SlitherAdapter;
 import lib.SlitherScene;
 
 public class MouseSnake extends MyControllableSnake<Position>{
@@ -11,7 +9,7 @@ public class MouseSnake extends MyControllableSnake<Position>{
     }
 
     @Override
-    public void choseDirection(Grid grid) {
+    public void choseDirection(SlitherScene scene) {
         Position mousePos= lastInput();
         if (mousePos == null){
             setCurrentDirection(null);

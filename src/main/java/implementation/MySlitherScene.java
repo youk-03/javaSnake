@@ -4,8 +4,6 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lib.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class MySlitherScene extends SlitherScene {
@@ -21,7 +19,7 @@ public class MySlitherScene extends SlitherScene {
 
     public void play(){
         for (Snake s:snakeList){
-            s.choseDirection(null);
+            s.choseDirection(this);
             s.move();
             //if snake is touching a fruit add a segment to snake and display it
 
@@ -32,6 +30,14 @@ public class MySlitherScene extends SlitherScene {
                 Fruit.displayAFruit(fruitList,snakeList);
             }
         }
+    }
+
+    public List<Snake> getSnakeList() {
+        return snakeList;
+    }
+
+    public List<Fruit> getFruitList() {
+        return fruitList;
     }
 
     @Override
@@ -63,7 +69,6 @@ public class MySlitherScene extends SlitherScene {
                             ((ArrowSnake) playable).setLastInput(Direction.RIGHT);
                             break;
                     }
-                    play();
                 }
             });
         }
@@ -72,7 +77,6 @@ public class MySlitherScene extends SlitherScene {
             this.setOnMouseMoved(new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent event) {
                    ((MouseSnake) playable).setLastInput(new MyPosition(event.getX(), event.getY()));
-                   play();
                 }
             });
         }

@@ -3,9 +3,6 @@ package implementation;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import lib.*;
-
-import java.util.ArrayList;
-
 import java.security.InvalidParameterException;
 import java.util.List;
 
@@ -107,6 +104,7 @@ public class MySnake implements Snake {
                     posSegm.getX() + (posSegm.getX() - posSegmPrev.getX()),
                     posSegm.getY() + (posSegm.getY() - posSegmPrev.getY()));
             last= new MySnake(last, null, posNew);
+            last.setColor(headColor,bodyColor);
         }
         else {
             if(this.isHead) {
@@ -115,6 +113,7 @@ public class MySnake implements Snake {
                         position.getX() + vpos[0],
                         position.getY() + vpos[1]);
                 last= new MySnake(this, null, posNew);
+                last.setColor(headColor,bodyColor);
             }
         }
     }
@@ -153,7 +152,7 @@ public class MySnake implements Snake {
     }
 
     @Override
-    public void choseDirection(Grid grid) {
+    public void choseDirection(SlitherScene scene) {
         throw new UnsupportedOperationException();
     }
 

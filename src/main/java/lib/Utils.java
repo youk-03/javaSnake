@@ -10,4 +10,8 @@ public final class Utils {
         vpos[1]= (vy / normalized) * velocity;
         return vpos;
     }
+
+    public static double distance(Position a, Position b){
+        return Math.sqrt(Math.pow((b.getX()-a.getX()),2)+Math.pow((b.getY()-a.getY()),2));
+    }
 }

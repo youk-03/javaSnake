@@ -5,15 +5,15 @@ public interface Clock {
      * @param rythm the rythm at wich the clock will tick
      * @return an initialize clock, ready to tick
     */
-    abstract Clock init(Number rythm);
+    abstract void init(long rythm);
 
     /**Make the code wait for a period of time set by the rythm of the clock. The clock must be initialized with .init() before usign this method.
      */
-    abstract void tick();
+    abstract void tick() throws InterruptedException;
 
     /**Change the rythm of the clock with the given number.
      *
      * @param rythm the nex rythm of the clock
      */
-    abstract void changeRythm(Number rythm);
+    abstract void changeRythm(long rythm);
 }

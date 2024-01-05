@@ -13,6 +13,8 @@ import lib.Snake;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
@@ -48,7 +50,6 @@ public class HelloApplication extends Application {
 
         stage.setTitle("Slither");
         stage.setScene(scene);
-
         stage.show();
     }
 

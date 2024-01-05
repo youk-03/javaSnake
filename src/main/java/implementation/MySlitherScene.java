@@ -11,12 +11,15 @@ import java.util.List;
 public class MySlitherScene extends SlitherScene {
     private Position<Double> mousePos;
     private  PaneScreen pane;
+    private List<Snake> snakeList;
+    private List<Fruit> fruitList;
+
     public MySlitherScene(PaneScreen pane) {
         super(pane);
         this.pane = pane;
     }
 
-    private void play(List<Snake> snakeList,List<Fruit> fruitList){
+    public void play(){
         for (Snake s:snakeList){
             s.choseDirection(null);
             s.move();
@@ -33,12 +36,13 @@ public class MySlitherScene extends SlitherScene {
 
     @Override
     public void init(List<Snake> snakeList, List<Fruit> fruitList) {
+        this.snakeList= snakeList;
+        this.fruitList= fruitList;
         Snake playable= snakeList.get(0);
         mousePos= new MyPosition(0,0);
         if(!(playable instanceof ControllableSnake)){
             throw new IllegalArgumentException();
         }
-        MySlitherScene scene= this;
 
         if(playable instanceof ArrowSnake){
             this.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -59,7 +63,7 @@ public class MySlitherScene extends SlitherScene {
                             ((ArrowSnake) playable).setLastInput(Direction.RIGHT);
                             break;
                     }
-                    play(snakeList,fruitList);
+                    play();
                 }
             });
         }
@@ -68,7 +72,7 @@ public class MySlitherScene extends SlitherScene {
             this.setOnMouseMoved(new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent event) {
                    ((MouseSnake) playable).setLastInput(new MyPosition(event.getX(), event.getY()));
-                    play(snakeList,fruitList);
+                   play();
                 }
             });
         }

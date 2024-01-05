@@ -15,6 +15,7 @@ public class MouseSnake extends MyControllableSnake<Position>{
         Position mousePos= lastInput();
         if (mousePos == null){
             setCurrentDirection(null);
+            return;
         }
         Position pos= this.getPos();
         double dx= pos.getX()-mousePos.getX();

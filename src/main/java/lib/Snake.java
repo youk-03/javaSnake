@@ -65,8 +65,9 @@ public interface Snake extends GraphicalObject{
                 pos.getY()+ vector[1]);
         this.moveCircle();
        if(this.isDead() && this instanceof ControllableSnake<?>){
+           ///////////////TODO///////////////////
            System.out.println("dead");
-           System.exit(1); ///////////////TODO///////////////////
+           System.exit(0);
        }
     }
 

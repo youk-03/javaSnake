@@ -148,6 +148,7 @@ public class MySnake implements Snake {
     @Override
     public Position getDirection() {
         if(!isHead()) throw new InvalidParameterException();
+        if(currentDirection==null) return null;
         return new MyPosition(currentDirection.getX(),currentDirection.getY());
     }
 
@@ -180,17 +181,14 @@ public class MySnake implements Snake {
             throw new IllegalCallerException();
         }
 
-        double rad= radius -1;
+        double rad= radius;
+        if(obj instanceof Snake) rad--; //to make sure
         if(yObj - (rad+obj.getRadius()) <= this.getY() && this.getY() <= yObj + (rad+obj.getRadius())){
-
             if(xObj + rad >= this.getX() && this.getX() >= xObj - rad) return true;
-
         }
 
         else if(xObj - (rad+obj.getRadius()) <= this.getX() && this.getX() <= xObj + (rad+obj.getRadius())){
-
             if(yObj + rad >= this.getY() && this.getY() >= yObj - rad) return true;
-
         }
         return false;
     }

@@ -12,7 +12,6 @@ public class MySnake implements Snake {
     private boolean isHead;
     private MySnake next;
     private MySnake previous;
-    private static MySnake last;
     private Color headColor, bodyColor;
 
     private Circle segment;
@@ -28,9 +27,6 @@ public class MySnake implements Snake {
         this.position= pos;
         this.isHead = true;
         segment = null;
-        if(isHead){
-            last = this;
-        }
         this.headColor= Color.DARKGREEN;
         this.bodyColor= Color.FORESTGREEN;
     }
@@ -43,9 +39,6 @@ public class MySnake implements Snake {
         this.position= pos;
         this.isHead = false;
         segment = null;
-        if(previous == last){
-            last = this;
-        }
         this.bodyColor= previous.bodyColor;
     }
 
@@ -55,7 +48,11 @@ public class MySnake implements Snake {
 
     @Override
     public Snake last() {
-        return last;
+        MySnake segment= this;
+        while (segment.next != null){
+            segment= segment.next;
+        }
+        return segment;
     }
 
     @Override
@@ -101,6 +98,7 @@ public class MySnake implements Snake {
     @Override
     public void add() {
         if(this.next != null) {
+            MySnake last= (MySnake) this.last();
             Position posSegm = last.getPos();
             Position posSegmPrev = last.prev().getPos();
             Position<Double> posNew= new MyPosition(

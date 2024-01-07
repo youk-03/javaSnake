@@ -1,10 +1,7 @@
 package implementation;
 
 import javafx.fxml.Initializable;
-import lib.Fruit;
-import lib.GameLoopTimer;
-import lib.SlitherScene;
-import lib.Snake;
+import lib.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,13 +37,14 @@ public class GameController implements Initializable {
         }
 
         MyFruit.init(pane,snakeList);
-        scene.init(snakeList,MyFruit.getListFruit());
+        fruitList= MyFruit.getListFruit();
+        scene.init(snakeList,fruitList);
 
         GameLoopTimer timer = new GameLoopTimer() {
             @Override
             public void tick(float secondsSinceLastFrame) {
                 //while true
-                play();
+                GameController.this.play();
             }
         };
         timer.start();

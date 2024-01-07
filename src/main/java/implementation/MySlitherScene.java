@@ -54,7 +54,6 @@ public class MySlitherScene extends SlitherScene {
             this.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
-
                     switch (event.getCode()) {
                         case UP: if(((ArrowSnake) playable).lastInput() == Direction.DOWN) {return;}
                             ((ArrowSnake) playable).setLastInput(Direction.UP);

@@ -13,7 +13,7 @@ public class MySnake implements Snake {
     private MySnake next;
     private MySnake previous;
     private static MySnake last;
-    private Color headColor= Color.DARKGREEN, bodyColor= Color.FORESTGREEN;
+    private Color headColor, bodyColor;
 
     private Circle segment;
     private Position<Double> currentDirection;
@@ -31,19 +31,22 @@ public class MySnake implements Snake {
         if(isHead){
             last = this;
         }
+        this.headColor= Color.DARKGREEN;
+        this.bodyColor= Color.FORESTGREEN;
     }
 
     /**Create a snake cell*/
-    public MySnake(MySnake previous,MySnake next,Position<Double> pos){
+    private MySnake(MySnake previous,MySnake next,Position<Double> pos){
         this.previous= previous;
         this.previous.next= this;
         this.next= next;
         this.position= pos;
         this.isHead = false;
         segment = null;
-        if(isHead){
+        if(previous == last){
             last = this;
         }
+        this.bodyColor= previous.bodyColor;
     }
 
     public Circle getSegment() {
@@ -103,19 +106,20 @@ public class MySnake implements Snake {
             Position<Double> posNew= new MyPosition(
                     posSegm.getX() + (posSegm.getX() - posSegmPrev.getX()),
                     posSegm.getY() + (posSegm.getY() - posSegmPrev.getY()));
-            last= new MySnake(last, null, posNew);
-            last.setColor(headColor,bodyColor);
+            new MySnake(last, null, posNew);
+        } else {
+            double[] vpos= Utils.velocityVector(position.getX(),position.getY(),currentDirection.getX(), currentDirection.getY(), velocity);
+            Position<Double> posNew = new MyPosition(
+                    position.getX() - vpos[0],
+                    position.getY() - vpos[1]);
+            new MySnake(this, null, posNew);
         }
-        else {
-            if(this.isHead) {
-                double[] vpos= Utils.velocityVector(position.getX(),position.getY(),currentDirection.getX(), currentDirection.getY(), velocity);
-                Position<Double> posNew = new MyPosition(
-                        position.getX() + vpos[0],
-                        position.getY() + vpos[1]);
-                last= new MySnake(this, null, posNew);
-                last.setColor(headColor,bodyColor);
-            }
-        }
+        /*Position posLast= last.getPos();
+        double[] vpos= Utils.velocityVector(posLast.getX(),posLast.getY(),currentDirection.getX(), currentDirection.getY(), velocity);
+        Position<Double> posNew = new MyPosition(
+                posLast.getX() - vpos[0],
+                posLast.getY() - vpos[1]);
+        last= new MySnake(last, null, posNew);*/
     }
 
 

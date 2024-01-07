@@ -15,7 +15,6 @@ public class MyControllableSnake<T> extends MySnake implements ControllableSnake
     @Override
     public void setLastInput(Object lastInput) {this.lastInput = (T) lastInput;}
 
-
     @Override
     public T lastInput(){return  lastInput;}
 }

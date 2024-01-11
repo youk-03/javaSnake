@@ -136,7 +136,10 @@ public interface Snake extends GraphicalObject{
     }
 
     default boolean willDie(Position dir){
-        return willDie(dir.getX(),dir.getY());
+        if(dir == null) return true;
+        Position pos= getPos();
+        double[] vector= Utils.velocityVector(pos.getX(), pos.getY(), dir.getX(), dir.getY(), this.getVelocity());
+        return willDie(pos.getX()+vector[0],pos.getY()+vector[1]);
     }
 
     default boolean isTouchingSom (List<Fruit> list){

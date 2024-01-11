@@ -1,12 +1,8 @@
 package implementation;
 
-import lib.GraphicalObject;
-import lib.Position;
-import lib.SlitherScene;
-import lib.Snake;
-import java.util.List;
+import lib.*;
 
-public class MyPosition implements Position<Double> {
+public class MyPosition implements Position {
     private double x;
     private double y;
 
@@ -15,63 +11,40 @@ public class MyPosition implements Position<Double> {
     }
 
     @Override
-    public Double getX() {
+    public double getX() {
         return x;
     }
 
     @Override
-    public Double getY() {
+    public double getY() {
         return y;
     }
 
     @Override
-    public void setX(Double x) {
+    public void setX(double x) {
         this.x= x;
     }
 
     @Override
-    public void setY(Double y) {
+    public void setY(double y) {
         this.y= y;
     }
 
     @Override
-    public void setXY(Double x, Double y) {
+    public void setXY(double x, double y) {
         this.x= x;
         this.y= y;
     }
 
-    public static Position<Double> getRandPos(){
+    public static Position getRandPos(){
         double x = Math.random()* SlitherScene.windowWidth;
         double y = Math.random()*SlitherScene.windowHeight;
 
         return new MyPosition(x,y);
     }
 
+    @Override
     public boolean equals(Position position) {
-        return position.getX().equals(this.getX()) && position.getY().equals(this.getY());
-    }
-
-    public boolean isValid(List<GraphicalObject> e){
-
-        for (GraphicalObject g: e) {
-            if(this.equals(g.getPos())) return false;
-        }
-        return true;
-
-    }
-
-    public boolean isValid(Snake head){
-        if (!head.isHead()){
-            throw new IllegalCallerException();
-        }
-        Snake tmp = head;
-        while(tmp != null){
-
-            if(this.equals(tmp.getPos())) return false;
-
-            tmp= tmp.next();
-        }
-
-        return true;
+        return position.getX()==this.getX() && position.getY()==this.getY();
     }
 }

@@ -1,5 +1,6 @@
 package implementation;
 
+import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import lib.Position;
 import lib.SlitherScene;
@@ -9,15 +10,17 @@ import java.util.Random;
 public class MyRandomSnake extends MySnake {
 
 
-    public MyRandomSnake(Position<Double> pos) {
+    public MyRandomSnake(Position pos) {
         super(pos);
         setColor(Color.DARKRED,Color.CRIMSON);
     }
 
     @Override
     public void choseDirection(SlitherScene scene){
-        Random rand= new Random();
-        Position pos= this.getPos();
-        setCurrentDirection(new MyPosition(rand.nextInt(),rand.nextInt()));
+        Position dir= MyPosition.getRandPos();
+        while(!isValidMove(dir) || willDie(dir)){
+            dir= MyPosition.getRandPos();
+        }
+        setCurrentDirection(dir);
     }
 }

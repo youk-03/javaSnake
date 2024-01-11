@@ -4,7 +4,7 @@ import lib.Position;
 import lib.SlitherScene;
 
 public class ArrowSnake extends MyControllableSnake<Direction>{
-    public ArrowSnake(Position<Double> pos) {
+    public ArrowSnake(Position pos) {
         super(pos);
     }
 

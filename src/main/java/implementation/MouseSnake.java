@@ -4,7 +4,7 @@ import lib.Position;
 import lib.SlitherScene;
 
 public class MouseSnake extends MyControllableSnake<Position>{
-    public MouseSnake(Position<Double> pos) {
+    public MouseSnake(Position pos) {
         super(pos);
     }
 

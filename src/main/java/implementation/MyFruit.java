@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MyFruit implements Fruit {
 
-    private Position<Double> pos;
+    private Position pos;
     private double radius = 5.0;
 
     private Circle fruit;

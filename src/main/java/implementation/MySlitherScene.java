@@ -7,7 +7,7 @@ import lib.*;
 import java.util.List;
 
 public class MySlitherScene extends SlitherScene {
-    private Position<Double> mousePos;
+    private Position mousePos;
     private  PaneScreen pane;
     private List<Snake> snakeList;
     private List<Fruit> fruitList;
@@ -15,21 +15,6 @@ public class MySlitherScene extends SlitherScene {
     public MySlitherScene(PaneScreen pane) {
         super(pane);
         this.pane = pane;
-    }
-
-    public void play(){
-        for (Snake s:snakeList){
-            s.choseDirection(this);
-            s.move();
-            //if snake is touching a fruit add a segment to snake and display it
-
-            if(s.isTouchingSom(fruitList)){
-                s.add();
-                s.last().display(pane);
-                //add a new fruits to map
-                Fruit.displayAFruit(fruitList,snakeList);
-            }
-        }
     }
 
     public List<Snake> getSnakeList() {
@@ -81,7 +66,7 @@ public class MySlitherScene extends SlitherScene {
         }
     }
 
-    public Position<Double> getMousePos() {
+    public Position getMousePos() {
         return new MyPosition(mousePos.getX(),mousePos.getY());
     }
 }

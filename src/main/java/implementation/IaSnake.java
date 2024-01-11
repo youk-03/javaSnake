@@ -9,7 +9,7 @@ import lib.Utils;
 import java.util.List;
 
 public class IaSnake extends MySnake{
-    public IaSnake(Position<Double> pos) {
+    public IaSnake(Position pos) {
         super(pos);
         setColor(Color.DARKRED,Color.CRIMSON);
     }
@@ -23,18 +23,25 @@ public class IaSnake extends MySnake{
         }
 
         Position pos= this.getPos();
-        Position minPos= fruits.get(0).getPos();
-        double min= Utils.distance(pos,minPos);
+        Position minPos= null;
+        double min= -1;
 
         for(Fruit f:fruits){
             Position fpos= f.getPos();
-            double fdist= Utils.distance(pos,fpos);
-            if(fdist<min){
-                minPos= fpos;
-                min= fdist;
+            if(isValidMove(fpos) && !willDie(fpos)){
+               if(minPos == null){
+                   minPos= fpos;
+                   min= Utils.distance(pos,fpos);
+               } else {
+                   double fdist= Utils.distance(pos,fpos);
+                   if(fdist<min){
+                       minPos= fpos;
+                       min= fdist;
+                   }
+               }
             }
         }
 
-        setCurrentDirection(minPos);
+        if(minPos != null) this.setCurrentDirection(minPos);
     }
 }

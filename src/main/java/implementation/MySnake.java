@@ -3,76 +3,47 @@ package implementation;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import lib.*;
-import java.security.InvalidParameterException;
 import java.util.List;
 
 public class MySnake implements Snake {
-    private Position<Double> position;
-    private final Double radius= 5.0;
-    private boolean isHead;
-    private MySnake next;
-    private MySnake previous;
+    public SnakeCell head;
+    public SnakeCell last;
+    private Position currentDirection;
+    double radius=5.0;
+    final double velocity= radius*2;
     private Color headColor, bodyColor;
 
-    private Circle segment;
-    private Position<Double> currentDirection;
-
-    final double velocity= radius*2;
-
     /**Create a head a snake*/
-    public MySnake(Position<Double> pos){
+    public MySnake(Position pos){
         currentDirection = new MyPosition(0,0);
-        this.next= null;
-        this.previous= null;
-        this.position= pos;
-        this.isHead = true;
-        segment = null;
-        this.headColor= Color.DARKGREEN;
-        this.bodyColor= Color.FORESTGREEN;
-    }
-
-    /**Create a snake cell*/
-    private MySnake(MySnake previous,MySnake next,Position<Double> pos){
-        this.previous= previous;
-        this.previous.next= this;
-        this.next= next;
-        this.position= pos;
-        this.isHead = false;
-        segment = null;
-        this.bodyColor= previous.bodyColor;
-    }
-
-    public Circle getSegment() {
-        return segment;
+        headColor= Color.DARKGREEN;
+        bodyColor= Color.FORESTGREEN;
+        head= new MySnakeCell(pos);
+        last= head;
     }
 
     @Override
-    public Snake last() {
-        MySnake segment= this;
-        while (segment.next != null){
-            segment= segment.next;
-        }
-        return segment;
+    public SnakeCell head(){
+        return head;
+    }
+
+    @Override
+    public SnakeCell last() {
+        return last;
     }
 
     @Override
     public void display(Screen screen) {
-        segment = new Circle();
-        segment.setCenterX(position.getX());
-        segment.setCenterY(position.getY());
-        segment.setRadius(radius);
-        if (isHead()){
-            segment.setFill(headColor);
-        } else {
-            segment.setFill(bodyColor);
+        SnakeCell current= head;
+        while (current != null){
+            current.display(screen);
+            current= current.next();
         }
-        screen.add(segment);
     }
 
     @Override
-    public Position<Double> getPos() {
-        Position<Double> pos= new MyPosition(position.getX(),position.getY());
-        return pos;
+    public Position getPos() {
+        return head.getPos();
     }
 
     @Override
@@ -80,65 +51,32 @@ public class MySnake implements Snake {
         return radius;
     }
 
-
-    @Override
-    public boolean isHead() {
-        return isHead;
-    }
-
-    @Override
-    public Snake next() {
-        return next;
-    }
-
-    @Override
-    public Snake prev() {
-        return previous;
-    }
     @Override
     public void add() {
-        if(this.next != null) {
-            MySnake last= (MySnake) this.last();
+        if(head.next() != null) {
             Position posSegm = last.getPos();
             Position posSegmPrev = last.prev().getPos();
-            Position<Double> posNew= new MyPosition(
+            Position posNew= new MyPosition(
                     posSegm.getX() + (posSegm.getX() - posSegmPrev.getX()),
                     posSegm.getY() + (posSegm.getY() - posSegmPrev.getY()));
-            new MySnake(last, null, posNew);
+            last = new MySnakeCell(last, null, posNew);
         } else {
-            double[] vpos= Utils.velocityVector(position.getX(),position.getY(),currentDirection.getX(), currentDirection.getY(), velocity);
-            Position<Double> posNew = new MyPosition(
-                    position.getX() - vpos[0],
-                    position.getY() - vpos[1]);
-            new MySnake(this, null, posNew);
+            double[] vpos= Utils.velocityVector(head.getX(),head.getY(),currentDirection.getX(), currentDirection.getY(), velocity);
+            Position posNew = new MyPosition(
+                    head.getX() - vpos[0],
+                    head.getY() - vpos[1]);
+            last = new MySnakeCell(head, null, posNew);
         }
-        /*Position posLast= last.getPos();
-        double[] vpos= Utils.velocityVector(posLast.getX(),posLast.getY(),currentDirection.getX(), currentDirection.getY(), velocity);
-        Position<Double> posNew = new MyPosition(
-                posLast.getX() - vpos[0],
-                posLast.getY() - vpos[1]);
-        last= new MySnake(last, null, posNew);*/
     }
-
 
     @Override
     public void removeFrom() {
-        previous.next=null;
-    }
-
-    @Override
-    public double getX() {
-        return position.getX();
-    }
-
-    @Override
-    public double getY() {
-        return position.getY();
+        //TODO
     }
 
     @Override
     public void setPosition(double x, double y) {
-        position.setXY(x,y);
+        head.setPosition(x,y);
     }
 
     @Override
@@ -148,7 +86,6 @@ public class MySnake implements Snake {
 
     @Override
     public Position getDirection() {
-        if(!isHead()) throw new InvalidParameterException();
         if(currentDirection==null) return null;
         return new MyPosition(currentDirection.getX(),currentDirection.getY());
     }
@@ -163,61 +100,151 @@ public class MySnake implements Snake {
         else currentDirection = new MyPosition(pos.getX(),pos.getY());
     }
 
-    public void moveCircle(){
-        this.segment.setCenterX(this.position.getX());
-        this.segment.setCenterY(this.position.getY());
-    }
-
     public void setColor(Color head, Color body){
         headColor= head;
         bodyColor= body;
     }
 
-    public boolean isTouching(GraphicalObject obj){
-        //comparer avec this
-        double xObj = obj.getPos().getX();
-        double yObj = obj.getPos().getY();
-
-        if(!this.isHead){
-            throw new IllegalCallerException();
-        }
-
-        double rad= radius;
-        if(obj instanceof Snake) rad--; //to make sure
-        if(yObj - (rad+obj.getRadius()) <= this.getY() && this.getY() <= yObj + (rad+obj.getRadius())){
-            if(xObj + rad >= this.getX() && this.getX() >= xObj - rad) return true;
-        }
-
-        else if(xObj - (rad+obj.getRadius()) <= this.getX() && this.getX() <= xObj + (rad+obj.getRadius())){
-            if(yObj + rad >= this.getY() && this.getY() >= yObj - rad) return true;
-        }
-        return false;
-    }
-
+    @Override
     public boolean isDead(){
         //compare avec tout les segment du serpent , a appelé avant de bouger le serpent une fois que la nouvelle pos a été calculée
-        if(!this.isHead){
-            throw new IllegalCallerException();
-        }
-        Snake tmp = this.next;
+        SnakeCell tmp = head.next();
         while(tmp != null){
-            if(this.isTouching(tmp)) { return true; }
+            if(head.isTouching(tmp)) { return true; }
             tmp = tmp.next();
         }
         return false;
     }
 
-    public boolean isTouchingSom (List<Fruit> list){ //faire disparaitre le fruit + changer ses val + head.add + head.last.display (:
-        if(!this.isHead){
-            throw new IllegalCallerException();
+    public class MySnakeCell implements SnakeCell{
+        private Position position;
+        private double radius;
+        private SnakeCell next;
+        private SnakeCell previous;
+        private Color color;
+        private Circle segment;
+
+        public MySnakeCell(Position pos){
+            this.next= null;
+            this.previous= null;
+            this.position= pos;
+            segment = null;
+            radius = MySnake.this.radius;
+            color= MySnake.this.headColor;
         }
-        for (Fruit g: list) {
-            if(this.isTouching(g)) {
-                g.setInvisible();
-                return true;
+
+        public MySnakeCell(SnakeCell previous,SnakeCell next,Position pos){
+            this.link(previous,next);
+            this.position= pos;
+            segment = null;
+            radius= MySnake.this.radius;
+            color= MySnake.this.bodyColor;
+        }
+
+        @Override
+        public void display(Screen screen) {
+            segment = new Circle();
+            segment.setCenterX(position.getX());
+            segment.setCenterY(position.getY());
+            segment.setRadius(radius);
+            segment.setFill(color);
+            screen.add(segment);
+        }
+
+        @Override
+        public Position getPos() {
+            return new MyPosition(position.getX(),position.getY());
+        }
+
+        @Override
+        public Double getRadius() {
+            return radius;
+        }
+
+        @Override
+        public boolean isHead() {
+            return this.previous == null;
+        }
+
+        @Override
+        public boolean isLast() {
+            return this.next == null;
+        }
+
+        @Override
+        public SnakeCell next() {
+            return next;
+        }
+
+        @Override
+        public SnakeCell prev() {
+            return previous;
+        }
+
+        @Override
+        public void link(SnakeCell previous, SnakeCell next) {
+           if(this.previous != previous){
+               this.previous=previous;
+               if(previous != null) previous.link(previous.prev(),this);
+           }
+           if(this.next != next){
+               this.next=next;
+               if(previous != null) next.link(this,next.next());
+           }
+        }
+
+        @Override
+        public double getX() {
+            return position.getX();
+        }
+
+        @Override
+        public double getY() {
+            return position.getY();
+        }
+
+        @Override
+        public void setPosition(double x, double y) {
+            position.setXY(x,y);
+        }
+
+        @Override
+        public boolean isTouching(GraphicalObject obj) {
+            //comparer avec this
+            double xObj = obj.getPos().getX();
+            double yObj = obj.getPos().getY();
+
+            double rad= radius;
+            if(obj instanceof Snake) rad--; //to make sure
+            if(yObj - (rad+obj.getRadius()) <= this.getY() && this.getY() <= yObj + (rad+obj.getRadius())){
+                return (xObj + rad >= this.getX() && this.getX() >= xObj - rad);
+            } else if(xObj - (rad+obj.getRadius()) <= this.getX() && this.getX() <= xObj + (rad+obj.getRadius())){
+                return (yObj + rad >= this.getY() && this.getY() >= yObj - rad);
             }
+            return false;
         }
-        return false;
+
+        @Override
+        public boolean isTouchingSom(List<Fruit> list) {
+            for (Fruit f: list) {
+                if(this.isTouching(f)) {
+                    f.setInvisible();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public Circle getSegment() {
+            return segment;
+        }
+
+        @Override
+        public void moveCircle() {
+            segment.setCenterX(position.getX());
+            segment.setCenterY(position.getY());
+        }
     }
 }
 

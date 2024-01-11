@@ -10,7 +10,7 @@ public interface Fruit extends GraphicalObject{
 
     abstract void setVisible();
 
-    public static void displayAFruit(List<Fruit> listFruit, List<Snake> snakes){
+    static void displayAFruit(List<Fruit> listFruit, List<Snake> snakes){
         boolean test = false;
         for (Fruit f: listFruit) {
             if(!f.isVisible()){
@@ -19,9 +19,9 @@ public interface Fruit extends GraphicalObject{
                 //TESTER D ABORD SI C'EST PAS SUR SNAKE DEJA EXISTANT OU UN FRUIT DONC UNE POSITION INVALIDE
                 while(!test){
                     pos = MyPosition.getRandPos();
-                    if(pos.isValid(listFruit)){
-                        for (Snake head: snakes ) {
-                            if(pos.isValid(head)) { test = true;}
+                    if(!pos.isIn(listFruit)){
+                        for (Snake s: snakes ) {
+                            if(!pos.isIn(s)) { test = true;}
                             else {
                                 test = false;
                                 break;

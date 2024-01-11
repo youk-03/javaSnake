@@ -22,6 +22,14 @@ public class MySnake implements Snake {
         last= head;
     }
 
+    public MySnake(Position pos,Color headColor, Color bodyColor){
+        currentDirection = new MyPosition(0,0);
+        this.headColor= headColor;
+        this.bodyColor= bodyColor;
+        head= new MySnakeCell(pos);
+        last= head;
+    }
+
     @Override
     public SnakeCell head(){
         return head;
@@ -103,17 +111,6 @@ public class MySnake implements Snake {
     public void setColor(Color head, Color body){
         headColor= head;
         bodyColor= body;
-    }
-
-    @Override
-    public boolean isDead(){
-        //compare avec tout les segment du serpent , a appelé avant de bouger le serpent une fois que la nouvelle pos a été calculée
-        SnakeCell tmp = head.next();
-        while(tmp != null){
-            if(head.isTouching(tmp)) { return true; }
-            tmp = tmp.next();
-        }
-        return false;
     }
 
     public class MySnakeCell implements SnakeCell{

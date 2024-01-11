@@ -92,7 +92,17 @@ public interface Snake extends GraphicalObject{
         return Utils.velocityVector(next.getX(), next.getY(),head.getX()+10, head.getY()+10, this.getVelocity());
     }
 
-    abstract boolean isDead();
+    default boolean isDead(){
+        //compare avec tout les segment du serpent , a appelé avant de bouger le serpent une fois que la nouvelle pos a été calculée
+        SnakeCell tmp = head().next();
+        if(tmp == null) return false;
+        tmp = tmp.next();
+        while(tmp != null){
+            if(head().isTouching(tmp)) { return true; }
+            tmp = tmp.next();
+        }
+        return false;
+    }
 
     default boolean isTouching (GraphicalObject obj){
         return head().isTouching(obj);
@@ -107,7 +117,6 @@ public interface Snake extends GraphicalObject{
         Position lastPosHead= head().getPos();
 
         setPosition(x,y);
-        next.setPosition(lastPosHead.getX(),lastPosHead.getY());
         if (this.isTouching(next)) res= true;
         this.setPosition(lastPosHead.getX(),lastPosHead.getY());
         return res;

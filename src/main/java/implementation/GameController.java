@@ -27,7 +27,7 @@ public class GameController implements Initializable {
         //initialise le jeu et lance la while true
         //ArrowSnake head = new ArrowSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
         MouseSnake head = new MouseSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
-        IaSnake ia = new IaSnake(new MyPosition(10, 10));
+        IaSnake ia = new IaSnake(new MyPosition(SlitherScene.windowWidth / 3, SlitherScene.windowHeight / 3));
 
         snakeList= new ArrayList<>();
         snakeList.add(head);

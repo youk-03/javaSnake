@@ -11,8 +11,7 @@ public class MyRandomSnake extends MySnake {
 
 
     public MyRandomSnake(Position pos) {
-        super(pos);
-        setColor(Color.DARKRED,Color.CRIMSON);
+        super(pos,Color.DARKRED,Color.CRIMSON);
     }
 
     @Override

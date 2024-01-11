@@ -10,8 +10,7 @@ import java.util.List;
 
 public class IaSnake extends MySnake{
     public IaSnake(Position pos) {
-        super(pos);
-        setColor(Color.DARKRED,Color.CRIMSON);
+        super(pos,Color.DARKRED,Color.CRIMSON);
     }
 
     @Override

@@ -27,7 +27,7 @@ public class IaSnake extends MySnake{
 
         for(Fruit f:fruits){
             Position fpos= f.getPos();
-            if(isValidMove(fpos) && !willDie(fpos)){
+            if(!willDie(fpos)){
                if(minPos == null){
                    minPos= fpos;
                    min= Utils.distance(pos,fpos);

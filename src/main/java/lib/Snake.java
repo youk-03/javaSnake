@@ -40,7 +40,7 @@ public interface Snake extends GraphicalObject{
 
         //To mitigate rotation
         if(head().next() != null){
-            double maxAngle= 30;
+            double maxAngle= 15;
             double[] actual= actualVector();
             double angle= Utils.angleBeetweenVector(actual[0],actual[1],vector[0],vector[1]);
             if(angle>maxAngle){

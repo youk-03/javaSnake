@@ -49,6 +49,9 @@ public interface Snake extends GraphicalObject{
             }
         }
 
+        //check if movement don't kill the snake on his neck
+        if(!isValidMove(vector)) return;
+
 
         //check if new pos in screen
         if(pos.getX()+ vector[0]> SlitherScene.windowWidth - SlitherScene.paddingX || pos.getX()+ vector[0]<0 + SlitherScene.paddingX || pos.getY()+ vector[1]>SlitherScene.windowHeight - SlitherScene.paddingY || pos.getY()+ vector[1] < 0 + SlitherScene.paddingY){
@@ -57,9 +60,6 @@ public interface Snake extends GraphicalObject{
             }
             return;
         }
-
-        //check if movement don't kill the snake on his neck
-        if(!isValidMove(vector)) return;
 
         SnakeCell tmp = this.last();
         while(tmp.prev() != null) { //moving the segment
@@ -71,9 +71,20 @@ public interface Snake extends GraphicalObject{
         }
 
         //moving the head
-        SnakeCell next= head().next();
         double newHeadX= pos.getX()+ vector[0];
         double newHeadY= pos.getY()+ vector[1];
+
+        //test if le
+        if(newHeadX> SlitherScene.windowWidth){
+            newHeadX= 0 + (newHeadX - SlitherScene.windowWidth);
+        } else if(pos.getX()+ vector[0]<0 + SlitherScene.paddingX){
+            newHeadX= SlitherScene.windowWidth + newHeadX;
+        }
+        if(pos.getY()+ vector[1]>SlitherScene.windowHeight){
+            newHeadY= 0 + (newHeadY - SlitherScene.windowHeight);
+        } else if(pos.getY()+ vector[1] < 0 + SlitherScene.paddingY){
+            newHeadY= SlitherScene.windowHeight + newHeadY;
+        }
         head().setPosition(newHeadX,newHeadY);
         head().moveCircle();
         if(this instanceof ControllableSnake<?>){

@@ -35,7 +35,13 @@ public class MySlitherScene extends SlitherScene {
             throw new IllegalArgumentException();
         }
 
+        ArrowSnake player2 = null;
+        if(snakeList.size() >= 2 && snakeList.get(1) instanceof ArrowSnake) {
+            player2= (ArrowSnake) snakeList.get(1);
+        }
+
         if(playable instanceof ArrowSnake){
+            ArrowSnake p2= player2;
             this.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
@@ -52,6 +58,26 @@ public class MySlitherScene extends SlitherScene {
                         case RIGHT: if(((ArrowSnake) playable).lastInput() == Direction.LEFT){return;}
                             ((ArrowSnake) playable).setLastInput(Direction.RIGHT);
                             break;
+                        case Z:
+                            if(p2 == null) return;
+                            if(p2.lastInput() == Direction.DOWN) {return;}
+                            else p2.setLastInput(Direction.UP);
+                            break;
+                        case S:
+                            if(p2 == null) return;
+                            if(p2.lastInput() == Direction.UP) {return;}
+                            else p2.setLastInput(Direction.DOWN);
+                            break;
+                        case Q:
+                            if(p2 == null) return;
+                            if(p2.lastInput() == Direction.RIGHT) {return;}
+                            else p2.setLastInput(Direction.LEFT);
+                            break;
+                        case D:
+                            if(p2 == null) return;
+                            if(p2.lastInput() == Direction.LEFT){return;}
+                            else p2.setLastInput(Direction.RIGHT);
+                            break;
                     }
                 }
             });
@@ -63,6 +89,36 @@ public class MySlitherScene extends SlitherScene {
                    ((MouseSnake) playable).setLastInput(new MyPosition(event.getX(), event.getY()));
                 }
             });
+            if(player2 != null){
+                ArrowSnake p2= player2;
+                this.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event) {
+                        switch (event.getCode()) {
+                            case Z:
+                                if(p2 == null) return;
+                                if(p2.lastInput() == Direction.DOWN) {return;}
+                                else p2.setLastInput(Direction.UP);
+                                break;
+                            case S:
+                                if(p2 == null) return;
+                                if(p2.lastInput() == Direction.UP) {return;}
+                                else p2.setLastInput(Direction.DOWN);
+                                break;
+                            case Q:
+                                if(p2 == null) return;
+                                if(p2.lastInput() == Direction.RIGHT) {return;}
+                                else p2.setLastInput(Direction.LEFT);
+                                break;
+                            case D:
+                                if(p2 == null) return;
+                                if(p2.lastInput() == Direction.LEFT){return;}
+                                else p2.setLastInput(Direction.RIGHT);
+                                break;
+                        }
+                    }
+                });
+            }
         }
     }
 

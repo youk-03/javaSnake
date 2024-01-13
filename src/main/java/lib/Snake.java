@@ -38,6 +38,18 @@ public interface Snake extends GraphicalObject{
         Position pos= getPos();
         double[] vector= Utils.velocityVector(pos.getX(), pos.getY(), dir.getX(), dir.getY(), this.getVelocity());
 
+        //To mitigate rotation
+        if(head().next() != null){
+            double maxAngle= 30;
+            double[] actual= actualVector();
+            double angle= Utils.angleBeetweenVector(actual[0],actual[1],vector[0],vector[1]);
+            if(angle>maxAngle){
+                Utils.rotatePoint(dir,pos,angle-20);
+                vector= Utils.velocityVector(pos.getX(), pos.getY(), dir.getX(), dir.getY(), this.getVelocity());
+            }
+        }
+
+
         //check if new pos in screen
         if(pos.getX()+ vector[0]> SlitherScene.windowWidth || pos.getX()+ vector[0]<0 || pos.getY()+ vector[1]>SlitherScene.windowHeight || pos.getY()+ vector[1] < 0){
             return;
@@ -47,9 +59,10 @@ public interface Snake extends GraphicalObject{
         if(!isValidMove(vector)) return;
 
         SnakeCell tmp = this.last();
-        while(tmp.prev() != null) { //moving the segment
+        while(tmp.prev() != null) { //moving the segmennt
             SnakeCell prev = tmp.prev();
-            tmp.setPosition(prev.getX(), prev.getY());
+            double[] vectorPrev= Utils.velocityVector(tmp.getX(), tmp.getY(), prev.getX(), prev.getY(), this.getVelocity());
+            tmp.setPosition(tmp.getX()+vectorPrev[0], tmp.getY()+vectorPrev[1]);
             tmp.moveCircle();
             tmp = prev;
         }

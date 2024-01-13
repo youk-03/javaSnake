@@ -37,9 +37,25 @@ public final class Utils {
     }
 
     public static double angleBeetweenVector(double x1, double y1,double x2, double y2){
+        //Theorème d’Al-Kashi
         return Math.toDegrees(
                 Math.acos(
                                 (x1*x2 + y1*y2) / (magnitudeVector(x1,y1) * magnitudeVector(x2,y2)) ) ) ;
+    }
+
+    public static void rotatePoint(Position point, Position centre, double angle){
+        double[] newCord= rotatePoint(point.getX(),point.getY(),centre.getX(),centre.getY(), angle);
+        point.setXY(newCord[0],newCord[1]);
+    }
+
+    public static double[] rotatePoint(double xP, double yP, double xCentre, double yCentre, double angle){
+        angle = Math.toRadians(angle*Math.PI / 180);
+        xP = xP - xCentre;
+        yP = yP - yCentre;
+        double[] newPoint = new double[2];
+        newPoint[0] = xP * Math.cos (angle) + yP * Math.sin (angle) + xCentre;
+        newPoint[1] = - xP * Math.sin (angle) + yP * Math.cos (angle) + yCentre;
+        return newPoint;
     }
 
     public static void rotateVector(Position vector, double angle){

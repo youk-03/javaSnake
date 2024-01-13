@@ -2,6 +2,8 @@ package implementation;
 
 import lib.*;
 
+import java.util.Random;
+
 public class MyPosition implements Position {
     private double x;
     private double y;
@@ -41,6 +43,38 @@ public class MyPosition implements Position {
         double y = Math.random()*SlitherScene.windowHeight;
 
         return new MyPosition(x,y);
+    }
+    /**get valid a rand pos not on the screen but outside of the screen */
+    public static Position getRandPosInvisible(){
+
+        boolean test = false;
+        Random random = new Random();
+        double maxX = SlitherScene.windowWidth*2;
+        double minX = SlitherScene.windowWidth;
+        double maxY = SlitherScene.windowHeight*2;
+        double minY = SlitherScene.windowHeight;
+
+        double newY = random.nextDouble(maxY + 1 + minY) - minY;
+        double newX = random.nextDouble(maxX + 1 + minX) - minX ; //-windowX --- windowX*2
+
+        while (!test){
+
+            if(newX > 0 && newX <= SlitherScene.windowWidth){
+                if(!(newY > 0 && newY <= SlitherScene.windowHeight)){
+                    test = true;
+                }
+                else{
+                    newY = random.nextDouble(maxY + 1 + minY) - minY;
+                    newX = random.nextDouble(maxX + 1 + minX) - minX ; //-windowX --- windowX*2
+                }
+            }
+            else {
+                test = true;
+            }
+        }
+
+        return new MyPosition(newX, newY);
+
     }
 
     @Override

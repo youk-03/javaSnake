@@ -15,6 +15,8 @@ public class MyFruit implements Fruit {
     private Circle fruit;
 
     private static int visibleFruit = 10;
+    private static int invisibleFruit = 100;
+    private boolean isTakable;
 
     private static final Color[] possibleColor = {Color.BLUE, Color.BLUEVIOLET, Color.CHOCOLATE, Color.DEEPPINK};
 
@@ -27,20 +29,28 @@ public class MyFruit implements Fruit {
         fruit.setRadius(radius);
         fruit.setFill(possibleColor[(int)(Math.random()*possibleColor.length)]);
         fruit.setVisible(false);
+        isTakable = false;
     }
 
    public static void init(Screen screen, List<Snake> snakes){ //to call only one time at first, init with 50 fruit
         MyFruit f = null;
-        for(int i=0; i<50; i++){
+        for(int i=0; i<150; i++){
             f = new MyFruit(-1,-1);
             listFruit.add(f);
             f.display(screen);
         }
+        //10 fruit constamment visible sur l'écran
+       //100 partout autour pas sur l'écran !
+       //50 en rab ?
 
         //we start by making 10 fruits visible on the screen
        for(int i=0; i<visibleFruit; i++){
-            Fruit.displayAFruit(listFruit, snakes);
+            Fruit.displayAFruit(listFruit, snakes, true);
         }
+
+       for(int i=0; i<invisibleFruit; i++){
+           Fruit.displayAFruit(listFruit, snakes, false);
+       }
    }
 
     @Override
@@ -64,6 +74,7 @@ public class MyFruit implements Fruit {
         this.pos.setX(x);
     }
 
+
     @Override
     public boolean isVisible(){
         return fruit.isVisible();
@@ -71,9 +82,10 @@ public class MyFruit implements Fruit {
 
     @Override
     public void setInvisible(){
-        fruit.setVisible(false); //CHANGER SES VAL DECREMENT ISVISIBLE
+        fruit.setVisible(false);
         this.setPosition(-1,-1);
         this.setFruitPos();
+        this.setIsTakable(false);
     }
 
 
@@ -89,7 +101,19 @@ public class MyFruit implements Fruit {
         fruit.setCenterY(this.getPos().getY());
     }
 
+    @Override
+    public void setIsTakable(boolean bool) {
+        this.isTakable = bool;
+    }
+
+    public boolean isTakable() {
+        return isTakable;
+    }
+
     public static List<Fruit> getListFruit() {
         return listFruit;
     }
+
+
+
 }

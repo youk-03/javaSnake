@@ -32,7 +32,7 @@ public interface Snake extends GraphicalObject{
     abstract void choseDirection(SlitherScene scene);
 
     /** Change the Position of every Snake part. If direction null, the snake doesn't move.*/
-    default void move(){
+    default void move(List<Fruit> fruitList){
         Position dir= getDirection();
         if(dir == null) return;
         Position pos= getPos();
@@ -51,7 +51,10 @@ public interface Snake extends GraphicalObject{
 
 
         //check if new pos in screen
-        if(pos.getX()+ vector[0]> SlitherScene.windowWidth || pos.getX()+ vector[0]<0 || pos.getY()+ vector[1]>SlitherScene.windowHeight || pos.getY()+ vector[1] < 0){
+        if(pos.getX()+ vector[0]> SlitherScene.windowWidth - SlitherScene.paddingX || pos.getX()+ vector[0]<0 + SlitherScene.paddingX || pos.getY()+ vector[1]>SlitherScene.windowHeight - SlitherScene.paddingY || pos.getY()+ vector[1] < 0 + SlitherScene.paddingY){
+            if(this instanceof ControllableSnake<?>){
+                Fruit.setPosForAllFruit(vector[0],vector[1],fruitList);
+            }
             return;
         }
 
@@ -59,7 +62,7 @@ public interface Snake extends GraphicalObject{
         if(!isValidMove(vector)) return;
 
         SnakeCell tmp = this.last();
-        while(tmp.prev() != null) { //moving the segmennt
+        while(tmp.prev() != null) { //moving the segment
             SnakeCell prev = tmp.prev();
             double[] vectorPrev= Utils.velocityVector(tmp.getX(), tmp.getY(), prev.getX(), prev.getY(), this.getVelocity());
             tmp.setPosition(tmp.getX()+vectorPrev[0], tmp.getY()+vectorPrev[1]);
@@ -73,6 +76,9 @@ public interface Snake extends GraphicalObject{
         double newHeadY= pos.getY()+ vector[1];
         head().setPosition(newHeadX,newHeadY);
         head().moveCircle();
+        if(this instanceof ControllableSnake<?>){
+            Fruit.setPosForAllFruit(vector[0],vector[1],fruitList);
+        }
 
 
         if(this.isDead() && this instanceof ControllableSnake<?>){

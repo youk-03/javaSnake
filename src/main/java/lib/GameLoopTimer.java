@@ -8,9 +8,9 @@ public abstract class GameLoopTimer extends AnimationTimer {
     private long pauseStart;
     boolean isPaused = false;
     private boolean isActive = false;
-   private boolean pauseScheduled;
-    private boolean playScheduled;
-    private boolean restartScheduled;
+   private boolean pauseScheduled = false;
+    private boolean playScheduled = false;
+    private boolean restartScheduled= false;
 
     public boolean isPaused() {
         return isPaused;
@@ -51,7 +51,6 @@ public abstract class GameLoopTimer extends AnimationTimer {
 
     @Override
     public void handle(long now){
-        System.out.println("now "+ now);
         if (pauseScheduled) {
             pauseStart = now;
             isPaused = true;
@@ -69,6 +68,7 @@ public abstract class GameLoopTimer extends AnimationTimer {
         }
 
         if (!isPaused) {
+            //System.out.println("now "+ now);
             float secondsSinceLastFrame = (float) ((now - lastFrameTimeNanos) / 1e9);
             lastFrameTimeNanos = now;
             tick(secondsSinceLastFrame);

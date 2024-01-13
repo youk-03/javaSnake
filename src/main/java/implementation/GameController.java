@@ -25,13 +25,13 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //initialise le jeu et lance la while true
-        //ArrowSnake head = new ArrowSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
-        MouseSnake head = new MouseSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
+        ArrowSnake head = new ArrowSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
+        //MouseSnake head = new MouseSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
         IaSnake ia = new IaSnake(new MyPosition(SlitherScene.windowWidth / 3, SlitherScene.windowHeight / 3));
 
         snakeList= new ArrayList<>();
         snakeList.add(head);
-        snakeList.add(ia);
+        //snakeList.add(ia);
         for(Snake s:snakeList){
             s.display(pane);
         }
@@ -51,21 +51,21 @@ public class GameController implements Initializable {
     }
 
     public void play(){
+        //a chaque mouvement du joueur bouger les fruits
         for (Snake s:snakeList){
             s.choseDirection(scene);
-            s.move();
+            s.move(fruitList);
             //if snake is touching a fruit add a segment to snake and display it
 
             if(s.isTouchingSom(fruitList)){
                 s.add();
                 s.last().display(pane);
                 //add a new fruits to map
-                Fruit.displayAFruit(fruitList,snakeList);
+                Fruit.displayAFruit(fruitList,snakeList,true);
             }
         }
     }
 
-    //update player movement ?
 }
 
 

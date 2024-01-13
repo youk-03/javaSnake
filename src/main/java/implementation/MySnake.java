@@ -224,7 +224,7 @@ public class MySnake implements Snake {
         @Override
         public boolean isTouchingSom(List<Fruit> list) {
             for (Fruit f: list) {
-                if(this.isTouching(f)) {
+                if(f.isTakable() && this.isTouching(f)) {
                     f.setInvisible();
                     return true;
                 }

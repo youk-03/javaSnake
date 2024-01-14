@@ -9,11 +9,13 @@ public class MySnake implements Snake {
     public SnakeCell head;
     public SnakeCell last;
     private Position currentDirection;
-    double radius=5.0;
+    double radius=5;
     final double velocity= radius*2;
     private Color headColor, bodyColor;
 
-    /**Create a head a snake*/
+    /**Create a snake*
+     * @param pos the position of the head of the snake
+     */
     public MySnake(Position pos){
         currentDirection = new MyPosition(0,0);
         headColor= Color.DARKGREEN;
@@ -22,6 +24,10 @@ public class MySnake implements Snake {
         last= head;
     }
 
+    /**Create a head a snake and precise its color
+     * @param  pos the position of the head of the snake
+     * @param headColor color of the head of the snake when display
+     * @param bodyColor color of all other snake segment*/
     public MySnake(Position pos,Color headColor, Color bodyColor){
         currentDirection = new MyPosition(0,0);
         this.headColor= headColor;
@@ -61,6 +67,7 @@ public class MySnake implements Snake {
 
     @Override
     public void add() {
+        //add segment if the snake is not only a head
         if(head.next() != null) {
             Position posSegm = last.getPos();
             Position posSegmPrev = last.prev().getPos();
@@ -68,7 +75,7 @@ public class MySnake implements Snake {
                     posSegm.getX() + (posSegm.getX() - posSegmPrev.getX()),
                     posSegm.getY() + (posSegm.getY() - posSegmPrev.getY()));
             last = new MySnakeCell(last, null, posNew);
-        } else {
+        } else { //add segment if the snake is not only a head
             double[] vpos= Utils.velocityVector(head.getX(),head.getY(),currentDirection.getX(), currentDirection.getY(), velocity);
             Position posNew = new MyPosition(
                     head.getX() - vpos[0],
@@ -108,11 +115,6 @@ public class MySnake implements Snake {
         else currentDirection = new MyPosition(pos.getX(),pos.getY());
     }
 
-    public void setColor(Color head, Color body){
-        headColor= head;
-        bodyColor= body;
-    }
-
     public class MySnakeCell implements SnakeCell{
         private Position position;
         private double radius;
@@ -121,6 +123,8 @@ public class MySnake implements Snake {
         private Color color;
         private Circle segment;
 
+        /**Create a head cell
+         * @param pos the position of the cell*/
         public MySnakeCell(Position pos){
             this.next= null;
             this.previous= null;
@@ -130,6 +134,10 @@ public class MySnake implements Snake {
             color= MySnake.this.headColor;
         }
 
+        /**Create a body cell, link to prev and next
+         * @parm prev the previous SnakeCell link to this one
+         * @param next the next SnakeCell link to this one
+         * @param pos the position of the cell*/
         public MySnakeCell(SnakeCell previous,SnakeCell next,Position pos){
             this.link(previous,next);
             this.position= pos;

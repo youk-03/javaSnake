@@ -11,15 +11,14 @@ import java.util.ArrayList;
 
 public class HelloApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage){
         PaneScreen canvas = new PaneScreen();
         MySlitherScene scene = new MySlitherScene(canvas);
-        //ArrowSnake head = new ArrowSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
         MouseSnake head = new MouseSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));
         MyRandomSnake ia = new MyRandomSnake(new MyPosition(0, 0));
         ArrayList<Snake> snakes= new ArrayList<>();
         snakes.add(head);
-        //snakes.add(ia);
+        snakes.add(ia);
         for(Snake s:snakes){
             s.display(canvas);
         }

@@ -18,7 +18,9 @@ public interface SnakeCell extends GraphicalObject {
     /**@return the previous segment of the snake cell. Null if it does not exist.*/
     abstract SnakeCell prev();
 
-    /**link the calling snake cell with the two given*/
+    /**link the calling snake cell with the two given
+     * @param previous the SnakeCell to link in previous position
+     * @param next the SnakeCell to link in next position*/
     abstract void link(SnakeCell previous,SnakeCell next);
 
     /**@return the pos of the cell on the x axes.*/
@@ -31,12 +33,13 @@ public interface SnakeCell extends GraphicalObject {
     /**@return true if the cell is touching the given object*/
     abstract boolean isTouching (GraphicalObject obj);
 
-    /**@return true if the cell is touching some food*/
+    /**@return true if the cell is touching some food
+     * @param list the fruit list to check with*/
     abstract boolean isTouchingSom (List<Fruit> list);
 
-    /**@return the graphical object representing a cell*/
+    /**@return the graphical representation of a cell*/
     abstract Circle getSegment();
 
-    /** change the pos of the circle of this on the scene */
+    /**Change the pos of the circle on the position of the cell*/
     abstract void moveCircle();
 }

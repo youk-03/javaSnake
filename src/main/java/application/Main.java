@@ -5,15 +5,13 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-import static java.lang.Thread.sleep;
-
 public class Main extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage){
         PaneScreen canvas = new PaneScreen();
         MySlitherScene scene = new MySlitherScene(canvas);
         GameControllerArrow controller = new GameControllerArrow(canvas,scene,true,true,false);
-        controller.initialize(null,null); //C'EST PAS DU TOUT COMME CA QU'ON FAIT NORMALEMENT FAUT UTILISER LE FXML
+        controller.initialize(null,null);
 
 
         stage.setTitle("Slither");

@@ -1,9 +1,6 @@
 package lib;
 
-import javafx.scene.shape.Circle;
-import java.security.InvalidParameterException;
 import java.util.List;
-import java.util.Optional;
 
 public interface Snake extends GraphicalObject{
     /**@return the first SnakeCell of the snake*/
@@ -21,7 +18,7 @@ public interface Snake extends GraphicalObject{
     /**@return the velocity of the snake (in pixel/tick)*/
     abstract double getVelocity();
 
-    /**Return position toward the snake go.*/
+    /**@return position toward the snake go.*/
     abstract Position getDirection();
 
     /**
@@ -31,7 +28,8 @@ public interface Snake extends GraphicalObject{
      */
     abstract void choseDirection(SlitherScene scene);
 
-    /** Change the Position of every Snake part. If direction null, the snake doesn't move.*/
+    /** Change the Position of every Snake part. If direction null, the snake doesn't move.
+     * @param fruitList the fruitList of the scene where the snake evolve*/
     default void move(List<Fruit> fruitList){
         Position dir= getDirection();
         if(dir == null) return;
@@ -42,7 +40,7 @@ public interface Snake extends GraphicalObject{
         if(head().next() != null){
             double maxAngle= 15;
             double[] actual= actualVector();
-            double angle= Utils.angleBeetweenVector(actual[0],actual[1],vector[0],vector[1]);
+            double angle= Utils.angleBetweenVector(actual[0],actual[1],vector[0],vector[1]);
             if(angle>maxAngle){
                 Utils.rotatePoint(dir,pos,angle-20);
                 vector= Utils.velocityVector(pos.getX(), pos.getY(), dir.getX(), dir.getY(), this.getVelocity());
@@ -61,6 +59,7 @@ public interface Snake extends GraphicalObject{
             return;
         }
 
+        //move all SnakeCell (exept the head)
         SnakeCell tmp = this.last();
         while(tmp.prev() != null) { //moving the segment
             SnakeCell prev = tmp.prev();
@@ -73,8 +72,7 @@ public interface Snake extends GraphicalObject{
         //moving the head
         double newHeadX= pos.getX()+ vector[0];
         double newHeadY= pos.getY()+ vector[1];
-
-        //test if le
+        //if the snake exit the screeen
         if(newHeadX> SlitherScene.windowWidth){
             newHeadX= 0 + (newHeadX - SlitherScene.windowWidth);
         } else if(pos.getX()+ vector[0]<0 + SlitherScene.paddingX){
@@ -99,6 +97,8 @@ public interface Snake extends GraphicalObject{
         }
     }
 
+    /**@return true if the move is accepted by move()
+     * @param vector the vectore of the mouvement (can be find with Utils.velocityVector()*/
     default boolean isValidMove(double[] vector){
         if(vector == null) return true;
         Position pos= getPos();
@@ -110,18 +110,22 @@ public interface Snake extends GraphicalObject{
         return !(next != null && willDieOnHisNeck(newHeadX,newHeadY));
     }
 
+    /**@return true if the move is accepted by move()
+     * @param dir the direction toward the snake want to go*/
     default boolean isValidMove(Position dir){
         if(dir == null) return true;
         Position pos= getPos();
         return isValidMove(Utils.velocityVector(pos.getX(), pos.getY(), dir.getX(), dir.getY(), this.getVelocity()));
     }
 
+    /**@return the vector of the actual mouvement of the snake (before change)*/
     private double[] actualVector(){
         SnakeCell head= head();
         SnakeCell next= head.next();
         return Utils.velocityVector(next.getX(), next.getY(),head.getX()+10, head.getY()+10, this.getVelocity());
     }
 
+    /**@return true if the snake have been killed or killed itself*/
     default boolean isDead(){
         //compare avec tout les segment du serpent , a appelé avant de bouger le serpent une fois que la nouvelle pos a été calculée
         SnakeCell tmp = head().next();
@@ -134,10 +138,12 @@ public interface Snake extends GraphicalObject{
         return false;
     }
 
+    /**@return true if the head of the snake touch the object*/
     default boolean isTouching (GraphicalObject obj){
         return head().isTouching(obj);
     }
 
+    /**@return true if the snake will die on his neck while going in this direction. !willDieOnHisNeck is one of the rule of isValidMove()*/
     private boolean willDieOnHisNeck(double x, double y){
         SnakeCell next= head().next();
         if(next == null) return false;
@@ -152,6 +158,7 @@ public interface Snake extends GraphicalObject{
         return res;
     }
 
+    /**@return true if the snake will die going in this direction*/
     private boolean willDie(double x, double y){;
         boolean res=false;
 
@@ -165,6 +172,8 @@ public interface Snake extends GraphicalObject{
         return res;
     }
 
+    /**@return true if the snake will die going in this direction
+     * @param dir the direction toward the snake go*/
     default boolean willDie(Position dir){
         if(dir == null) return true;
         Position pos= getPos();
@@ -172,6 +181,8 @@ public interface Snake extends GraphicalObject{
         return willDie(pos.getX()+vector[0],pos.getY()+vector[1]);
     }
 
+    /**@return true if the snake is touching some fruit
+     * @param list the list of fruit*/
     default boolean isTouchingSom (List<Fruit> list){
        return head().isTouchingSom(list);
     }

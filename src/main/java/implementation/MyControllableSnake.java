@@ -2,7 +2,6 @@ package implementation;
 
 import lib.ControllableSnake;
 import lib.Position;
-import lib.SlitherScene;
 
 public class MyControllableSnake<T> extends MySnake implements ControllableSnake {
    private T lastInput;

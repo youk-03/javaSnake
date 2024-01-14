@@ -2,6 +2,8 @@ package lib;
 
 import implementation.*;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+
 import java.util.List;
 
 public abstract class GameController implements Initializable {
@@ -14,6 +16,8 @@ public abstract class GameController implements Initializable {
     protected boolean player2;
     protected boolean withIA;
     protected boolean scrolling;
+
+    protected GameLoopTimer timer;
 
     protected void make(PaneScreen pane, SlitherScene scene, boolean player2, boolean withIA, boolean scrolling){
         this.pane= pane;
@@ -37,5 +41,13 @@ public abstract class GameController implements Initializable {
                 Fruit.displayAFruit(fruitList,snakeList,true);
             }
         }
+    }
+
+    public Scene getScene(){
+        return this.scene;
+    }
+
+    public void setTimerStart(){
+        timer.start();
     }
 }

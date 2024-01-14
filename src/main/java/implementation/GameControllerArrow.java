@@ -10,6 +10,13 @@ public class GameControllerArrow extends GameController {
 
     public GameControllerArrow(PaneScreen pane, MySlitherScene scene, boolean player2, boolean withIA, boolean scrolling){
         make(pane,scene,player2,withIA,player2);
+        timer = new GameLoopTimer() {
+            @Override
+            public void tick(float secondsSinceLastFrame) {
+                //while true
+                GameControllerArrow.this.play();
+            }
+        };
     }
 
     @Override
@@ -36,14 +43,7 @@ public class GameControllerArrow extends GameController {
         fruitList= MyFruit.getListFruit();
         scene.init(snakeList,fruitList);
 
-        GameLoopTimer timer = new GameLoopTimer() {
-            @Override
-            public void tick(float secondsSinceLastFrame) {
-                //while true
-                GameControllerArrow.this.play();
-            }
-        };
-        timer.start();
+        timer.pause();
     }
 }
 

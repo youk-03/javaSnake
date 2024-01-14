@@ -10,14 +10,16 @@ import static java.lang.Thread.sleep;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        PaneScreen canvas = new PaneScreen();
-        MySlitherScene scene = new MySlitherScene(canvas);
-        GameControllerArrow controller = new GameControllerArrow(canvas,scene,true,true,false);
-        controller.initialize(null,null); //C'EST PAS DU TOUT COMME CA QU'ON FAIT NORMALEMENT FAUT UTILISER LE FXML
-
+        //PaneScreen canvas = new PaneScreen();
+        //MySlitherScene scene = new MySlitherScene(canvas);
+        //GameControllerArrow controller = new GameControllerArrow(canvas,scene,true,true,false);
+        //controller.initialize(null,null);
+        MainScene mainScene = new MainScene(new PaneScreen());
+        SceneController sceneController = new SceneController(stage);
+        mainScene.init();
 
         stage.setTitle("Slither");
-        stage.setScene(scene);
+        stage.setScene(mainScene);
         stage.show();
     }
 

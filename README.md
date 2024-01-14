@@ -1,4 +1,5 @@
 # Projet Slither
+[le git du projet](https://gaufre.informatique.univ-paris-diderot.fr/nico/slither)
 
 ## Utiliser le projet
 

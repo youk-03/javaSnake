@@ -64,7 +64,7 @@ public class MyFruit implements Fruit {
     }
 
     @Override
-    public Double getRadius() {
+    public double getRadius() {
         return radius;
     }
 

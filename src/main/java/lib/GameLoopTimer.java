@@ -8,7 +8,7 @@ public abstract class GameLoopTimer extends AnimationTimer {
     private long pauseStart;
     boolean isPaused = false;
     private boolean isActive = false;
-   private boolean pauseScheduled = false;
+    private boolean pauseScheduled = false;
     private boolean playScheduled = false;
     private boolean restartScheduled= false;
 

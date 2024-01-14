@@ -8,13 +8,11 @@ import java.util.List;
 
 public class MySlitherScene extends SlitherScene {
     private Position mousePos;
-    private  PaneScreen pane;
     private List<Snake> snakeList;
     private List<Fruit> fruitList;
 
     public MySlitherScene(PaneScreen pane) {
         super(pane);
-        this.pane = pane;
     }
 
     public List<Snake> getSnakeList() {
@@ -35,11 +33,13 @@ public class MySlitherScene extends SlitherScene {
             throw new IllegalArgumentException();
         }
 
+        //get player2 if exist
         ArrowSnake player2 = null;
         if(snakeList.size() >= 2 && snakeList.get(1) instanceof ArrowSnake) {
             player2= (ArrowSnake) snakeList.get(1);
         }
 
+        //add handler on arrow snakes
         if(playable instanceof ArrowSnake){
             ArrowSnake p2= player2;
             this.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -83,6 +83,7 @@ public class MySlitherScene extends SlitherScene {
             });
         }
 
+        //add handler on player MouseSnake and player2 ArrowSnake
         else if (playable instanceof MouseSnake){
             this.setOnMouseMoved(new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent event) {

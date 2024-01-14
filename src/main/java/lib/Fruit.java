@@ -4,12 +4,17 @@ import implementation.MyPosition;
 import java.util.List;
 
 public interface Fruit extends GraphicalObject{
+
+    /**@return true if the fruit is visible in game*/
     abstract boolean isVisible();
 
+    /** Make the fruit non-visible in game*/
     abstract void setInvisible();
 
+    /** Make the fruit visible in game*/
     abstract void setVisible();
 
+    /** Display a random fruit and make it visible in game*/
     static void displayAFruit(List<Fruit> listFruit, List<Snake> snakes, boolean onScreen){
         boolean test = false;
         for (Fruit f: listFruit) {
@@ -47,8 +52,11 @@ public interface Fruit extends GraphicalObject{
 
     abstract void setFruitPos();
 
+    /**@return true if the fruit is currently eatable*/
     abstract boolean isTakable();
 
+    /**Change the interactivity of a fruit
+     * @param bool true to set the fruit eatable and false to set the fruit non-eatable.*/
     abstract void setIsTakable(boolean bool);
 
     static void setPosForAllFruit(double x, double y, List<Fruit> fruitList){

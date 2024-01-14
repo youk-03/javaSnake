@@ -35,10 +35,4 @@ public interface Position {
         }
         return false;
     }
-
-    default boolean isTouching(GraphicalObject obj){
-        double x= getX();
-        double y= getY();
-        return Utils.isTouching(obj,x,y);
-    }
 }

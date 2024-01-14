@@ -19,6 +19,13 @@ public abstract class GameController implements Initializable {
 
     protected GameLoopTimer timer;
 
+    /**Initialaze the attribute of the current object
+     * @param pane the pane where the game is display
+     * @param scene the SlitherScene of the game
+     * @param player2 true to add a second playable snake
+     * @param withIA  true to add non playable snake to the game
+     * @param scrolling true to make the game scroll with the player. If false, the snake will enter a side of the screen and exit from the other. Will be set at false if player2.
+     */
     protected void make(PaneScreen pane, SlitherScene scene, boolean player2, boolean withIA, boolean scrolling){
         this.pane= pane;
         this.scene= scene;
@@ -27,6 +34,7 @@ public abstract class GameController implements Initializable {
         this.scrolling= scrolling;
     }
 
+    /** Play one tick of the game*/
     public void play(){
         //a chaque mouvement du joueur bouger les fruits
         for (Snake s:snakeList){

@@ -18,7 +18,6 @@ public abstract class SlitherScene extends Scene {
     public abstract void init(List<Snake> snakes, List<Fruit> fruitList);
 
     public abstract Position getMousePos();
-
     public abstract List<Snake> getSnakeList();
     public abstract List<Fruit> getFruitList();
 }

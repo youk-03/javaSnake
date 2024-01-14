@@ -7,8 +7,6 @@ public class PaneScreen extends AnchorPane implements lib.Screen {
 
     @Override
     public void add(Node obj) {
-
         this.getChildren().add(obj);
-
     }
 }

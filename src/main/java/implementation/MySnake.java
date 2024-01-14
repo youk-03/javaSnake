@@ -61,7 +61,7 @@ public class MySnake implements Snake {
     }
 
     @Override
-    public Double getRadius() {
+    public double getRadius() {
         return radius;
     }
 
@@ -162,7 +162,7 @@ public class MySnake implements Snake {
         }
 
         @Override
-        public Double getRadius() {
+        public double getRadius() {
             return radius;
         }
 

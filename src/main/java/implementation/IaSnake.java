@@ -26,18 +26,20 @@ public class IaSnake extends MySnake{
         double min= -1;
 
         for(Fruit f:fruits){
-            Position fpos= f.getPos();
-            if(!willDie(fpos)){
-               if(minPos == null){
-                   minPos= fpos;
-                   min= Utils.distance(pos,fpos);
-               } else {
-                   double fdist= Utils.distance(pos,fpos);
-                   if(fdist<min){
-                       minPos= fpos;
-                       min= fdist;
-                   }
-               }
+            if(f.isTakable()){
+                Position fpos= f.getPos();
+                if(!willDie(fpos)){
+                    if(minPos == null){
+                        minPos= fpos;
+                        min= Utils.distance(pos,fpos);
+                    } else {
+                        double fdist= Utils.distance(pos,fpos);
+                        if(fdist<min){
+                            minPos= fpos;
+                            min= fdist;
+                        }
+                    }
+                }
             }
         }
 

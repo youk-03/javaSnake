@@ -20,18 +20,27 @@ public abstract class GameLoopTimer extends AnimationTimer {
         return isActive;
     }
 
+    /**
+     * pause the game
+     */
     public void pause() {
         if (!isPaused) {
             pauseScheduled = true;
         }
     }
 
+    /**
+     * restart the game
+     */
     public void play() {
         if (isPaused) {
             playScheduled = true;
         }
     }
 
+    /**
+     * start the game for the first time, method inherited from AnimationTimer
+     */
     @Override
     public void start() {
         super.start();
@@ -39,6 +48,9 @@ public abstract class GameLoopTimer extends AnimationTimer {
         restartScheduled = true;
     }
 
+    /**
+     * stop the game, method inherited from AnimationTimer
+     */
     @Override
     public void stop() {
         super.stop();
@@ -49,6 +61,10 @@ public abstract class GameLoopTimer extends AnimationTimer {
         playScheduled = false;
     }
 
+    /**
+     * inherited from Animation timer, it is the method that call the tick and is not called directly by us but by JavaFX
+     * @param now
+     */
     @Override
     public void handle(long now){
         if (pauseScheduled) {
@@ -68,7 +84,6 @@ public abstract class GameLoopTimer extends AnimationTimer {
         }
 
         if (!isPaused) {
-            //System.out.println("now "+ now);
             float secondsSinceLastFrame = (float) ((now - lastFrameTimeNanos) / 1e9);
             lastFrameTimeNanos = now;
             tick(secondsSinceLastFrame);

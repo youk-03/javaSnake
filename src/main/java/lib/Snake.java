@@ -1,5 +1,6 @@
 package lib;
 
+import implementation.IaSnake;
 import implementation.MainScene;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public interface Snake extends GraphicalObject{
 
     /** Change the Position of every Snake part. If direction null, the snake doesn't move.
      * @param fruitList the fruitList of the scene where the snake evolve*/
-    default void move(List<Fruit> fruitList){
+    default void move(List<Fruit> fruitList, List<Snake> snakeList){
 
         double paddingX = 0;
         double paddingY = 0;
@@ -106,8 +107,11 @@ public interface Snake extends GraphicalObject{
             }
         }
 
+        if(this instanceof IaSnake && this.isBeingKilled(snakeList)){
+            System.out.println("ia dead");
+        }
 
-        if(this.isDead() && this instanceof ControllableSnake<?>){
+        if(this.isDead(snakeList) && this instanceof ControllableSnake<?>){
            ///////////////TODO///////////////////
            System.out.println("dead");
            System.exit(0);
@@ -142,8 +146,28 @@ public interface Snake extends GraphicalObject{
         return Utils.velocityVector(next.getX(), next.getY(),head.getX()+10, head.getY()+10, this.getVelocity());
     }
 
+    default boolean isBeingKilled(List<Snake> snakeList){
+        SnakeCell tmp;
+
+        for (Snake snake : snakeList) {
+
+            if (!(snake == this)) {
+                tmp = snake.head();
+                while (tmp != null) {
+                    if (this.head().isTouching(tmp)) {
+                        return true;
+                    }
+                    tmp = tmp.next();
+                }
+            }
+        }
+
+        return false;
+
+    }
+
     /**@return true if the snake have been killed or killed itself*/
-    default boolean isDead(){
+    default boolean isDead(List<Snake> snakeList){
         //compare avec tout les segment du serpent , a appelé avant de bouger le serpent une fois que la nouvelle pos a été calculée
         SnakeCell tmp = head().next();
         if(tmp == null) return false;
@@ -152,6 +176,10 @@ public interface Snake extends GraphicalObject{
             if(head().isTouching(tmp)) { return true; }
             tmp = tmp.next();
         }
+        if(snakeList != null) {
+           return this.isBeingKilled(snakeList);
+        }
+
         return false;
     }
 
@@ -182,7 +210,7 @@ public interface Snake extends GraphicalObject{
         Position lastPosHead= head().getPos();
         setPosition(x,y);
         if(this.isTouching(this.last())) return false;
-        if(this.isDead()){
+        if(this.isDead(null)){
             res= true;
         }
         this.setPosition(lastPosHead.getX(),lastPosHead.getY());

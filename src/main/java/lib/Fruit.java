@@ -21,7 +21,6 @@ public interface Fruit extends GraphicalObject{
             if(!f.isVisible()){
                 Position pos = f.getPos();
 
-                //TESTER D ABORD SI C'EST PAS SUR SNAKE DEJA EXISTANT OU UN FRUIT DONC UNE POSITION INVALIDE
                 while(!test){
                     if(onScreen) {
                         pos = MyPosition.getRandPos();
@@ -59,6 +58,13 @@ public interface Fruit extends GraphicalObject{
      * @param bool true to set the fruit eatable and false to set the fruit non-eatable.*/
     abstract void setIsTakable(boolean bool);
 
+    /** Set the position of all fruits from fruitList relatively to x and y
+     * used only in scrolling mode
+     * if the new position is out of the planned map the fruit new position will be onto the other side
+     * @param x (incrementation of the player pos x)
+     * @param y (incrementation of the player pos y)
+     * @param fruitList
+     */
     static void setPosForAllFruit(double x, double y, List<Fruit> fruitList){
         double newX;
         double newY;

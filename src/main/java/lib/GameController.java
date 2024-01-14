@@ -36,10 +36,10 @@ public abstract class GameController implements Initializable {
 
     /** Play one tick of the game*/
     public void play(){
-        //a chaque mouvement du joueur bouger les fruits
+        //each move of the player move the fruits
         for (Snake s:snakeList){
             s.choseDirection(scene);
-            s.move(fruitList);
+            s.move(fruitList,snakeList);
             //if snake is touching a fruit add a segment to snake and display it
 
             if(s.isTouchingSom(fruitList)){

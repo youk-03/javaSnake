@@ -3,7 +3,7 @@
 
 ## Utiliser le projet
 
-### Décompresser le ficier slither.zip
+### Décompresser le fichier slither.zip
 Après avoir téléchargé le fichier _slither.zip_, placez le dans le répertoire souhaité et décompressez le.
 
 ### Compiler le projet

@@ -1,5 +1,7 @@
 package lib;
 
+import implementation.MainScene;
+
 import java.util.List;
 
 public interface Snake extends GraphicalObject{
@@ -31,6 +33,16 @@ public interface Snake extends GraphicalObject{
     /** Change the Position of every Snake part. If direction null, the snake doesn't move.
      * @param fruitList the fruitList of the scene where the snake evolve*/
     default void move(List<Fruit> fruitList){
+
+        double paddingX = 0;
+        double paddingY = 0;
+
+        if(MainScene.scrolling){
+            paddingY = SlitherScene.paddingY;
+            paddingX = SlitherScene.paddingX;
+        }
+
+
         Position dir= getDirection();
         if(dir == null) return;
         Position pos= getPos();
@@ -52,12 +64,15 @@ public interface Snake extends GraphicalObject{
 
 
         //check if new pos in screen
-        if(pos.getX()+ vector[0]> SlitherScene.windowWidth - SlitherScene.paddingX || pos.getX()+ vector[0]<0 + SlitherScene.paddingX || pos.getY()+ vector[1]>SlitherScene.windowHeight - SlitherScene.paddingY || pos.getY()+ vector[1] < 0 + SlitherScene.paddingY){
-            if(this instanceof ControllableSnake<?>){
-                Fruit.setPosForAllFruit(vector[0],vector[1],fruitList);
+            if(pos.getX()+ vector[0]> SlitherScene.windowWidth - paddingX || pos.getX()+ vector[0]<0 + paddingX || pos.getY()+ vector[1]>SlitherScene.windowHeight - paddingY || pos.getY()+ vector[1] < 0 + paddingY){
+                if(MainScene.scrolling) {
+                    if (this instanceof ControllableSnake<?>) {
+                        Fruit.setPosForAllFruit(vector[0], vector[1], fruitList);
+                    }
+                }
+                return;
             }
-            return;
-        }
+
 
         //move all SnakeCell (exept the head)
         SnakeCell tmp = this.last();
@@ -75,18 +90,20 @@ public interface Snake extends GraphicalObject{
         //if the snake exit the screeen
         if(newHeadX> SlitherScene.windowWidth){
             newHeadX= 0 + (newHeadX - SlitherScene.windowWidth);
-        } else if(pos.getX()+ vector[0]<0 + SlitherScene.paddingX){
+        } else if(pos.getX()+ vector[0]<0 + paddingX){
             newHeadX= SlitherScene.windowWidth + newHeadX;
         }
         if(pos.getY()+ vector[1]>SlitherScene.windowHeight){
             newHeadY= 0 + (newHeadY - SlitherScene.windowHeight);
-        } else if(pos.getY()+ vector[1] < 0 + SlitherScene.paddingY){
+        } else if(pos.getY()+ vector[1] < 0 + paddingY){
             newHeadY= SlitherScene.windowHeight + newHeadY;
         }
         head().setPosition(newHeadX,newHeadY);
         head().moveCircle();
-        if(this instanceof ControllableSnake<?>){
-            Fruit.setPosForAllFruit(vector[0],vector[1],fruitList);
+        if(MainScene.scrolling) {
+            if (this instanceof ControllableSnake<?>) {
+                Fruit.setPosForAllFruit(vector[0], vector[1], fruitList);
+            }
         }
 
 

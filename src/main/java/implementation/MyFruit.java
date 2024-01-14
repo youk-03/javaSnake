@@ -47,10 +47,11 @@ public class MyFruit implements Fruit {
        for(int i=0; i<visibleFruit; i++){
             Fruit.displayAFruit(listFruit, snakes, true);
         }
-
-       for(int i=0; i<invisibleFruit; i++){
-           Fruit.displayAFruit(listFruit, snakes, false);
-       }
+        if(MainScene.scrolling) {
+            for (int i = 0; i < invisibleFruit; i++) {
+                Fruit.displayAFruit(listFruit, snakes, false);
+            }
+        }
    }
 
     @Override

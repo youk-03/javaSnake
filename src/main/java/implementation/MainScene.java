@@ -13,7 +13,7 @@ import java.util.List;
 public class MainScene extends Scene {
 
     PaneScreen pane;
-    static boolean scrolling,arrowKey,twoP,ia,mouseKey;
+    public static boolean scrolling,arrowKey,twoP,ia,mouseKey;
     Button play;
     public MainScene(PaneScreen pane) {
         super(pane, SlitherScene.windowWidth, SlitherScene.windowHeight);

@@ -65,7 +65,6 @@ public interface Snake extends GraphicalObject{
 
 
         //check if new pos in screen
-        /* //Permet de ne pas sortir de la fenêtre en mode scolling
             if(pos.getX()+ vector[0]> SlitherScene.windowWidth - paddingX || pos.getX()+ vector[0]<0 + paddingX || pos.getY()+ vector[1]>SlitherScene.windowHeight - paddingY || pos.getY()+ vector[1] < 0 + paddingY){
                 if(MainScene.scrolling) {
                     if (this instanceof ControllableSnake<?>) {
@@ -73,7 +72,7 @@ public interface Snake extends GraphicalObject{
                     }
                 }
                 return;
-           }*/
+           }
 
 
         //move all SnakeCell (exept the head)

@@ -15,7 +15,7 @@ public interface Fruit extends GraphicalObject{
     abstract void setVisible();
 
     /** Display a random fruit and make it visible in game*/
-    static void displayAFruit(List<Fruit> listFruit, List<Snake> snakes, boolean onScreen){
+    static void displayAFruit(List<Fruit> listFruit, List<Snake> snakes, boolean onScreen, boolean sDead, Position sDeadPos){
         boolean test = false;
         for (Fruit f: listFruit) {
             if(!f.isVisible()){
@@ -23,7 +23,16 @@ public interface Fruit extends GraphicalObject{
 
                 while(!test){
                     if(onScreen) {
-                        pos = MyPosition.getRandPos();
+                        pos = MyPosition.getRandPos(SlitherScene.windowWidth, SlitherScene.windowHeight,0,0);
+                    }
+                    else if(sDead){
+                        if(sDeadPos == null){
+                            throw new IllegalArgumentException();
+                        }
+
+                        else {
+                            pos = MyPosition.getRandPos(sDeadPos.getX()+10, sDeadPos.getY()+10, sDeadPos.getX()-10, sDeadPos.getY()-10);
+                        }
                     }
                     else{
                         pos = MyPosition.getRandPosInvisible();

@@ -46,7 +46,7 @@ public abstract class GameController implements Initializable {
                 s.add();
                 s.last().display(pane);
                 //add a new fruits to map
-                Fruit.displayAFruit(fruitList,snakeList,true);
+                Fruit.displayAFruit(fruitList,snakeList,true, false, null);
             }
         }
     }

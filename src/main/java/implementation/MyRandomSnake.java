@@ -13,9 +13,9 @@ public class MyRandomSnake extends MySnake {
 
     @Override
     public void choseDirection(SlitherScene scene){
-        Position dir= MyPosition.getRandPos();
+        Position dir= MyPosition.getRandPos(SlitherScene.windowWidth, SlitherScene.windowHeight,0,0);
         while(!isValidMove(dir) || willDie(dir)){
-            dir= MyPosition.getRandPos();
+            dir= MyPosition.getRandPos(SlitherScene.windowWidth, SlitherScene.windowHeight,0,0);
         }
         setCurrentDirection(dir);
     }

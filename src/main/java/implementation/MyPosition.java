@@ -38,9 +38,9 @@ public class MyPosition implements Position {
         this.y= y;
     }
 
-    public static Position getRandPos(){
-        double x = Math.random()* SlitherScene.windowWidth;
-        double y = Math.random()*SlitherScene.windowHeight;
+    public static Position getRandPos(double maxX, double maxY, double minX, double minY){
+        double x = ( Math.random()* maxX ) + minX;
+        double y = ( Math.random()* maxY ) + minY;
 
         return new MyPosition(x,y);
     }

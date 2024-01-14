@@ -45,11 +45,11 @@ public class MyFruit implements Fruit {
 
         //we start by making 10 fruits visible on the screen
        for(int i=0; i<visibleFruit; i++){
-            Fruit.displayAFruit(listFruit, snakes, true);
+            Fruit.displayAFruit(listFruit, snakes, true,false,null);
         }
         if(MainScene.scrolling) {
             for (int i = 0; i < invisibleFruit; i++) {
-                Fruit.displayAFruit(listFruit, snakes, false);
+                Fruit.displayAFruit(listFruit, snakes, false,false,null);
             }
         }
    }

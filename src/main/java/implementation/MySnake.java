@@ -110,6 +110,18 @@ public class MySnake implements Snake {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void disappear() {
+        SnakeCell tmp = this.head;
+        while(tmp != null){
+            tmp.setPosition(-2,-2);
+            tmp.getSegment().setVisible(false);
+            tmp.moveCircle();
+            tmp=tmp.next();
+        }
+
+    }
+
     public void setCurrentDirection(Position pos){
         if(pos == null) currentDirection= null;
         else currentDirection = new MyPosition(pos.getX(),pos.getY());

@@ -108,15 +108,31 @@ public interface Snake extends GraphicalObject{
         }
 
         if(this instanceof IaSnake && this.isBeingKilled(snakeList)){
-            System.out.println("ia dead");
+
+            for(int i=0; i<10; i++){
+                Fruit.displayAFruit(fruitList,snakeList,false,true,this.getPos());
+            }
+            this.disappear();
+            snakeList.remove(this);
         }
 
         if(this.isDead(snakeList) && this instanceof ControllableSnake<?>){
-           ///////////////TODO///////////////////
-           System.out.println("dead");
-           System.exit(0);
+            if(isThereAnotherP(snakeList, this)){
+                for(int i=0; i<10; i++){
+                    Fruit.displayAFruit(fruitList,snakeList,false,true,this.getPos());
+                }
+                this.disappear();
+                snakeList.remove(this);
+            }
+            else {  ///////////////TODO///////////////////
+                System.out.println("dead");
+                System.exit(0);
+            }
         }
     }
+
+    /**if the snake is dead make it disappear*/
+    public void disappear();
 
     /**@return true if the move is accepted by move()
      * @param vector the vectore of the mouvement (can be find with Utils.velocityVector()*/
@@ -230,5 +246,14 @@ public interface Snake extends GraphicalObject{
      * @param list the list of fruit*/
     default boolean isTouchingSom (List<Fruit> list){
        return head().isTouchingSom(list);
+    }
+
+    default boolean isThereAnotherP (List<Snake> snakeList, Snake snake){
+        for (Snake s: snakeList) {
+           if(s instanceof ControllableSnake<?> && s != snake){
+               return true;
+           }
+        }
+        return false;
     }
 }

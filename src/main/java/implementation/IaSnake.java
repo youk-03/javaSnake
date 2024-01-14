@@ -26,7 +26,7 @@ public class IaSnake extends MySnake{
         double min= -1;
 
         for(Fruit f:fruits){
-            if(f.isTakable()){
+            if(f.isTakable() && f.getPos().getX() > 0 && f.getPos().getX() < SlitherScene.windowWidth && f.getPos().getY() > 0 && f.getPos().getY() < SlitherScene.windowHeight){
                 Position fpos= f.getPos();
                 if(!willDie(fpos)){
                     if(minPos == null){

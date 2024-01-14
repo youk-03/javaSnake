@@ -7,17 +7,14 @@ Après avoir télécharger le fichier _slither.zip_, placer le dans le répertoi
 
 ### Compiler le projet
 Placer vous dans le répertoire que vous venez de décompresser et utiliser la commande suivante:
-```mvn compile```
-Le projet est maintenant compiler
+```mvn compile```. Le projet est maintenant compiler
 
 ### Executer le projet
-Après avoir compiler le projet, toujours dans le même répertoire, utilisez la commande
-```maven package```
-Un fichier executable _.jar_ est alors créer à la racine du projet. C'est l'executable du projet. Il suffit allors d'executer ce fichier _.jar_.
+Après avoir compiler le projet, toujours dans le même répertoire, utilisez la commande:
+```maven package```. Un fichier executable _.jar_ est alors créer à la racine du projet. C'est l'executable du projet. Il suffit allors d'executer ce fichier _.jar_.
 
 ### Utiliser l'interface
-A l'execution le projet s'ouvre sur un menu avec différent bouton. Selectionner les options deux jeu que vous souhaitez et appuyer sur _"Play"_ pour lancer le jeu.
-A la mort du joeur principale, le jeu se ferme.
+A l'execution le projet s'ouvre sur un menu avec différent bouton. Selectionner les options deux jeu que vous souhaitez et appuyer sur _"Play"_ pour lancer le jeu. A la mort du joeur principale, le jeu se ferme.
 
 ## Diagramme des classes & Structure du projet
 A la racine du projet, vous pourrez trouver le fichier _diagram.png_. Ce fichier image contient un diagrame des classes permettant de mieux saisir la structure du projet.

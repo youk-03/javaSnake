@@ -1,0 +1,99 @@
+Index: src/main/java/application/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package application;\r\n\r\nimport implementation.*;\r\nimport javafx.application.Application;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.event.EventHandler;\r\nimport javafx.scene.control.Button;\r\nimport javafx.stage.Stage;\r\nimport java.io.IOException;\r\n\r\nimport lib.SlitherScene;\r\nimport lib.Snake;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\nimport static java.lang.Thread.sleep;\r\n\r\npublic class Main extends Application {\r\n    @Override\r\n    public void start(Stage stage) throws IOException {\r\n        PaneScreen canvas = new PaneScreen();\r\n        MySlitherScene scene = new MySlitherScene(canvas);\r\n        GameController controller = new GameController(canvas,scene);\r\n        controller.initialize(null,null); //C'EST PAS DU TOUT COMME CA QU'ON FAIT NORMALEMENT FAUT UTILISER LE FXML\r\n\r\n\r\n        stage.setTitle(\"Slither\");\r\n        stage.setScene(scene);\r\n        stage.show();\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        launch();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/application/Main.java b/src/main/java/application/Main.java
+--- a/src/main/java/application/Main.java	
++++ b/src/main/java/application/Main.java	
+@@ -8,6 +8,7 @@
+ import javafx.stage.Stage;
+ import java.io.IOException;
+ 
++import lib.Position;
+ import lib.SlitherScene;
+ import lib.Snake;
+ import java.util.ArrayList;
+@@ -16,20 +17,28 @@
+ import static java.lang.Thread.sleep;
+ 
+ public class Main extends Application {
++
+     @Override
+     public void start(Stage stage) throws IOException {
++
+         PaneScreen canvas = new PaneScreen();
++        PaneScreen pane = new PaneScreen();
+         MySlitherScene scene = new MySlitherScene(canvas);
++        MainScene mainScene = new MainScene(pane);
++        mainScene.init();
++        SceneController sceneController = new SceneController(stage, mainScene, scene);
+         GameController controller = new GameController(canvas,scene);
+-        controller.initialize(null,null); //C'EST PAS DU TOUT COMME CA QU'ON FAIT NORMALEMENT FAUT UTILISER LE FXML
++        controller.initialize(null,null);
+ 
+ 
+         stage.setTitle("Slither");
+-        stage.setScene(scene);
++        //stage.setScene(scene);
++        stage.setScene(mainScene);
+         stage.show();
+     }
+ 
+     public static void main(String[] args) {
++
+         launch();
+     }
+ }
+\ No newline at end of file
+Index: src/main/java/implementation/IaSnake.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package implementation;\r\n\r\nimport javafx.scene.paint.Color;\r\nimport lib.Fruit;\r\nimport lib.Position;\r\nimport lib.SlitherScene;\r\nimport lib.Utils;\r\n\r\nimport java.util.List;\r\n\r\npublic class IaSnake extends MySnake{\r\n    public IaSnake(Position pos) {\r\n        super(pos,Color.DARKRED,Color.CRIMSON);\r\n    }\r\n\r\n    @Override\r\n    public void choseDirection(SlitherScene scene){\r\n        List<Fruit> fruits= scene.getFruitList();\r\n        if(fruits == null || fruits.get(0) == null){\r\n            setCurrentDirection(null);\r\n            return;\r\n        }\r\n\r\n        Position pos= this.getPos();\r\n        Position minPos= null;\r\n        double min= -1;\r\n\r\n        for(Fruit f:fruits){\r\n            Position fpos= f.getPos();\r\n            if(isValidMove(fpos) && !willDie(fpos)){\r\n               if(minPos == null){\r\n                   minPos= fpos;\r\n                   min= Utils.distance(pos,fpos);\r\n               } else {\r\n                   double fdist= Utils.distance(pos,fpos);\r\n                   if(fdist<min){\r\n                       minPos= fpos;\r\n                       min= fdist;\r\n                   }\r\n               }\r\n            }\r\n        }\r\n\r\n        if(minPos != null) this.setCurrentDirection(minPos);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/implementation/IaSnake.java b/src/main/java/implementation/IaSnake.java
+--- a/src/main/java/implementation/IaSnake.java	
++++ b/src/main/java/implementation/IaSnake.java	
+@@ -26,19 +26,25 @@
+         double min= -1;
+ 
+         for(Fruit f:fruits){
+-            Position fpos= f.getPos();
+-            if(isValidMove(fpos) && !willDie(fpos)){
+-               if(minPos == null){
+-                   minPos= fpos;
+-                   min= Utils.distance(pos,fpos);
+-               } else {
+-                   double fdist= Utils.distance(pos,fpos);
+-                   if(fdist<min){
+-                       minPos= fpos;
+-                       min= fdist;
+-                   }
+-               }
+-            }
++
++            //if(f.isTakable()) {
++
++                Position fpos = f.getPos();
++                if (isValidMove(fpos) && !willDie(fpos)) {
++                    if (minPos == null) {
++                        minPos = fpos;
++                        min = Utils.distance(pos, fpos);
++                    } else {
++                        double fdist = Utils.distance(pos, fpos);
++                        if (fdist < min) {
++                            minPos = fpos;
++                            min = fdist;
++                        }
++                    }
++                }
++
++           // }
++
+         }
+ 
+         if(minPos != null) this.setCurrentDirection(minPos);

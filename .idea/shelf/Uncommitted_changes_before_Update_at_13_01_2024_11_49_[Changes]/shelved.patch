@@ -1,0 +1,180 @@
+Index: src/main/java/implementation/GameController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package implementation;\r\n\r\nimport javafx.fxml.Initializable;\r\nimport lib.*;\r\n\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.ResourceBundle;\r\n\r\npublic class GameController implements Initializable {\r\n\r\n   public PaneScreen pane;\r\n   private List<Snake> snakeList;\r\n   private List<Fruit> fruitList;\r\n\r\n   MySlitherScene scene;\r\n\r\n\r\n    public GameController(PaneScreen pane, MySlitherScene scene){\r\n        this.pane = pane;\r\n        this.scene = scene;\r\n    }\r\n\r\n    @Override\r\n    public void initialize(URL url, ResourceBundle resourceBundle) {\r\n        //initialise le jeu et lance la while true\r\n        //ArrowSnake head = new ArrowSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));\r\n        MouseSnake head = new MouseSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));\r\n        IaSnake ia = new IaSnake(new MyPosition(10, 10));\r\n\r\n        snakeList= new ArrayList<>();\r\n        snakeList.add(head);\r\n        snakeList.add(ia);\r\n        for(Snake s:snakeList){\r\n            s.display(pane);\r\n        }\r\n\r\n        MyFruit.init(pane,snakeList);\r\n        fruitList= MyFruit.getListFruit();\r\n        scene.init(snakeList,fruitList);\r\n\r\n        GameLoopTimer timer = new GameLoopTimer() {\r\n            @Override\r\n            public void tick(float secondsSinceLastFrame) {\r\n                //while true\r\n                GameController.this.play();\r\n            }\r\n        };\r\n        timer.start();\r\n    }\r\n\r\n    public void play(){\r\n        for (Snake s:snakeList){\r\n            s.choseDirection(scene);\r\n            s.move();\r\n            //if snake is touching a fruit add a segment to snake and display it\r\n\r\n            if(s.isTouchingSom(fruitList)){\r\n                s.add();\r\n                s.last().display(pane);\r\n                //add a new fruits to map\r\n                Fruit.displayAFruit(fruitList,snakeList);\r\n            }\r\n        }\r\n    }\r\n\r\n    //update player movement ?\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/implementation/GameController.java b/src/main/java/implementation/GameController.java
+--- a/src/main/java/implementation/GameController.java	(revision 8762e99ca661bd9c5859dcde40805da7f8a87cea)
++++ b/src/main/java/implementation/GameController.java	(date 1704834931278)
+@@ -53,7 +53,7 @@
+     public void play(){
+         for (Snake s:snakeList){
+             s.choseDirection(scene);
+-            s.move();
++            s.move(snakeList);
+             //if snake is touching a fruit add a segment to snake and display it
+ 
+             if(s.isTouchingSom(fruitList)){
+Index: src/main/java/implementation/MySnake.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package implementation;\r\n\r\nimport javafx.scene.paint.Color;\r\nimport javafx.scene.shape.Circle;\r\nimport lib.*;\r\nimport java.security.InvalidParameterException;\r\nimport java.util.List;\r\n\r\npublic class MySnake implements Snake {\r\n    private Position<Double> position;\r\n    private final Double radius= 5.0;\r\n    private boolean isHead;\r\n    private MySnake next;\r\n    private MySnake previous;\r\n    private Color headColor, bodyColor;\r\n\r\n    private Circle segment;\r\n    private Position<Double> currentDirection;\r\n\r\n    final double velocity= radius*2;\r\n\r\n    /**Create a head a snake*/\r\n    public MySnake(Position<Double> pos){\r\n        currentDirection = new MyPosition(0,0);\r\n        this.next= null;\r\n        this.previous= null;\r\n        this.position= pos;\r\n        this.isHead = true;\r\n        segment = null;\r\n        this.headColor= Color.DARKGREEN;\r\n        this.bodyColor= Color.FORESTGREEN;\r\n    }\r\n\r\n    /**Create a snake cell*/\r\n    private MySnake(MySnake previous,MySnake next,Position<Double> pos){\r\n        this.previous= previous;\r\n        this.previous.next= this;\r\n        this.next= next;\r\n        this.position= pos;\r\n        this.isHead = false;\r\n        segment = null;\r\n        this.bodyColor= previous.bodyColor;\r\n    }\r\n\r\n    public Circle getSegment() {\r\n        return segment;\r\n    }\r\n\r\n    @Override\r\n    public Snake last() {\r\n        MySnake segment= this;\r\n        while (segment.next != null){\r\n            segment= segment.next;\r\n        }\r\n        return segment;\r\n    }\r\n\r\n    @Override\r\n    public void display(Screen screen) {\r\n        segment = new Circle();\r\n        segment.setCenterX(position.getX());\r\n        segment.setCenterY(position.getY());\r\n        segment.setRadius(radius);\r\n        if (isHead()){\r\n            segment.setFill(headColor);\r\n        } else {\r\n            segment.setFill(bodyColor);\r\n        }\r\n        screen.add(segment);\r\n    }\r\n\r\n    @Override\r\n    public Position<Double> getPos() {\r\n        Position<Double> pos= new MyPosition(position.getX(),position.getY());\r\n        return pos;\r\n    }\r\n\r\n    @Override\r\n    public Double getRadius() {\r\n        return radius;\r\n    }\r\n\r\n\r\n    @Override\r\n    public boolean isHead() {\r\n        return isHead;\r\n    }\r\n\r\n    @Override\r\n    public Snake next() {\r\n        return next;\r\n    }\r\n\r\n    @Override\r\n    public Snake prev() {\r\n        return previous;\r\n    }\r\n    @Override\r\n    public void add() {\r\n        if(this.next != null) {\r\n            MySnake last= (MySnake) this.last();\r\n            Position posSegm = last.getPos();\r\n            Position posSegmPrev = last.prev().getPos();\r\n            Position<Double> posNew= new MyPosition(\r\n                    posSegm.getX() + (posSegm.getX() - posSegmPrev.getX()),\r\n                    posSegm.getY() + (posSegm.getY() - posSegmPrev.getY()));\r\n            new MySnake(last, null, posNew);\r\n        } else {\r\n            double[] vpos= Utils.velocityVector(position.getX(),position.getY(),currentDirection.getX(), currentDirection.getY(), velocity);\r\n            Position<Double> posNew = new MyPosition(\r\n                    position.getX() - vpos[0],\r\n                    position.getY() - vpos[1]);\r\n            new MySnake(this, null, posNew);\r\n        }\r\n        /*Position posLast= last.getPos();\r\n        double[] vpos= Utils.velocityVector(posLast.getX(),posLast.getY(),currentDirection.getX(), currentDirection.getY(), velocity);\r\n        Position<Double> posNew = new MyPosition(\r\n                posLast.getX() - vpos[0],\r\n                posLast.getY() - vpos[1]);\r\n        last= new MySnake(last, null, posNew);*/\r\n    }\r\n\r\n\r\n    @Override\r\n    public void removeFrom() {\r\n        previous.next=null;\r\n    }\r\n\r\n    @Override\r\n    public double getX() {\r\n        return position.getX();\r\n    }\r\n\r\n    @Override\r\n    public double getY() {\r\n        return position.getY();\r\n    }\r\n\r\n    @Override\r\n    public void setPosition(double x, double y) {\r\n        position.setXY(x,y);\r\n    }\r\n\r\n    @Override\r\n    public double getVelocity() {\r\n        return velocity;\r\n    }\r\n\r\n    @Override\r\n    public Position getDirection() {\r\n        if(!isHead()) throw new InvalidParameterException();\r\n        if(currentDirection==null) return null;\r\n        return new MyPosition(currentDirection.getX(),currentDirection.getY());\r\n    }\r\n\r\n    @Override\r\n    public void choseDirection(SlitherScene scene) {\r\n        throw new UnsupportedOperationException();\r\n    }\r\n\r\n    public void setCurrentDirection(Position pos){\r\n        if(pos == null) currentDirection= null;\r\n        else currentDirection = new MyPosition(pos.getX(),pos.getY());\r\n    }\r\n\r\n    public void moveCircle(){\r\n        this.segment.setCenterX(this.position.getX());\r\n        this.segment.setCenterY(this.position.getY());\r\n    }\r\n\r\n    public void setColor(Color head, Color body){\r\n        headColor= head;\r\n        bodyColor= body;\r\n    }\r\n\r\n    public boolean isTouching(GraphicalObject obj){\r\n        //comparer avec this\r\n        double xObj = obj.getPos().getX();\r\n        double yObj = obj.getPos().getY();\r\n\r\n        if(!this.isHead){\r\n            throw new IllegalCallerException();\r\n        }\r\n\r\n        double rad= radius;\r\n        if(obj instanceof Snake) rad--; //to make sure\r\n        if(yObj - (rad+obj.getRadius()) <= this.getY() && this.getY() <= yObj + (rad+obj.getRadius())){\r\n            if(xObj + rad >= this.getX() && this.getX() >= xObj - rad) return true;\r\n        }\r\n\r\n        else if(xObj - (rad+obj.getRadius()) <= this.getX() && this.getX() <= xObj + (rad+obj.getRadius())){\r\n            if(yObj + rad >= this.getY() && this.getY() >= yObj - rad) return true;\r\n        }\r\n        return false;\r\n    }\r\n\r\n    public boolean isDead(){\r\n        //compare avec tout les segment du serpent , a appelé avant de bouger le serpent une fois que la nouvelle pos a été calculée\r\n        if(!this.isHead){\r\n            throw new IllegalCallerException();\r\n        }\r\n        Snake tmp = this.next;\r\n        while(tmp != null){\r\n            if(this.isTouching(tmp)) { return true; }\r\n            tmp = tmp.next();\r\n        }\r\n        return false;\r\n    }\r\n\r\n    public boolean isTouchingSom (List<Fruit> list){ //faire disparaitre le fruit + changer ses val + head.add + head.last.display (:\r\n        if(!this.isHead){\r\n            throw new IllegalCallerException();\r\n        }\r\n        for (Fruit g: list) {\r\n            if(this.isTouching(g)) {\r\n                g.setInvisible();\r\n                return true;\r\n            }\r\n        }\r\n        return false;\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/implementation/MySnake.java b/src/main/java/implementation/MySnake.java
+--- a/src/main/java/implementation/MySnake.java	(revision 8762e99ca661bd9c5859dcde40805da7f8a87cea)
++++ b/src/main/java/implementation/MySnake.java	(date 1704833978205)
+@@ -194,16 +194,32 @@
+         return false;
+     }
+ 
+-    public boolean isDead(){
+-        //compare avec tout les segment du serpent , a appelé avant de bouger le serpent une fois que la nouvelle pos a été calculée
+-        if(!this.isHead){
+-            throw new IllegalCallerException();
+-        }
+-        Snake tmp = this.next;
++    public boolean isDying(Snake head){
++        Snake tmp = head;
++
+         while(tmp != null){
+             if(this.isTouching(tmp)) { return true; }
+             tmp = tmp.next();
+         }
++
++        return false;
++
++    }
++
++    public boolean isDead(List<Snake> snakelist){ //a appeler sur chaque serpent pour tester si il est mort
++        //compare avec tout les segment du serpent , a appelé avant de bouger le serpent une fois que la nouvelle pos a été calculée
++        if(!this.isHead){
++            throw new IllegalCallerException();
++        }
++
++        if(this.isDying(this.next)) return true;
++
++        for (Snake snake: snakelist) {
++            if(snake != this){
++                if(this.isDying(snake)) return true;
++            }
++        }
++
+         return false;
+     }
+ 
+Index: src/main/java/implementation/MySlitherScene.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package implementation;\r\n\r\nimport javafx.event.EventHandler;\r\nimport javafx.scene.input.KeyEvent;\r\nimport javafx.scene.input.MouseEvent;\r\nimport lib.*;\r\nimport java.util.List;\r\n\r\npublic class MySlitherScene extends SlitherScene {\r\n    private Position<Double> mousePos;\r\n    private  PaneScreen pane;\r\n    private List<Snake> snakeList;\r\n    private List<Fruit> fruitList;\r\n\r\n    public MySlitherScene(PaneScreen pane) {\r\n        super(pane);\r\n        this.pane = pane;\r\n    }\r\n\r\n    public void play(){\r\n        for (Snake s:snakeList){\r\n            s.choseDirection(this);\r\n            s.move();\r\n            //if snake is touching a fruit add a segment to snake and display it\r\n\r\n            if(s.isTouchingSom(fruitList)){\r\n                s.add();\r\n                s.last().display(pane);\r\n                //add a new fruits to map\r\n                Fruit.displayAFruit(fruitList,snakeList);\r\n            }\r\n        }\r\n    }\r\n\r\n    public List<Snake> getSnakeList() {\r\n        return snakeList;\r\n    }\r\n\r\n    public List<Fruit> getFruitList() {\r\n        return fruitList;\r\n    }\r\n\r\n    @Override\r\n    public void init(List<Snake> snakeList, List<Fruit> fruitList) {\r\n        this.snakeList= snakeList;\r\n        this.fruitList= fruitList;\r\n        Snake playable= snakeList.get(0);\r\n        mousePos= new MyPosition(0,0);\r\n        if(!(playable instanceof ControllableSnake)){\r\n            throw new IllegalArgumentException();\r\n        }\r\n\r\n        if(playable instanceof ArrowSnake){\r\n            this.setOnKeyPressed(new EventHandler<KeyEvent>() {\r\n                @Override\r\n                public void handle(KeyEvent event) {\r\n                    switch (event.getCode()) {\r\n                        case UP: if(((ArrowSnake) playable).lastInput() == Direction.DOWN) {return;}\r\n                            ((ArrowSnake) playable).setLastInput(Direction.UP);\r\n                            break;\r\n                        case DOWN: if(((ArrowSnake) playable).lastInput() == Direction.UP) {return;}\r\n                            ((ArrowSnake) playable).setLastInput(Direction.DOWN);\r\n                            break;\r\n                        case LEFT: if(((ArrowSnake) playable).lastInput() == Direction.RIGHT) {return;}\r\n                            ((ArrowSnake) playable).setLastInput(Direction.LEFT);\r\n                            break;\r\n                        case RIGHT: if(((ArrowSnake) playable).lastInput() == Direction.LEFT){return;}\r\n                            ((ArrowSnake) playable).setLastInput(Direction.RIGHT);\r\n                            break;\r\n                    }\r\n                }\r\n            });\r\n        }\r\n\r\n        else if (playable instanceof MouseSnake){\r\n            this.setOnMouseMoved(new EventHandler<MouseEvent>() {\r\n                @Override public void handle(MouseEvent event) {\r\n                   ((MouseSnake) playable).setLastInput(new MyPosition(event.getX(), event.getY()));\r\n                }\r\n            });\r\n        }\r\n    }\r\n\r\n    public Position<Double> getMousePos() {\r\n        return new MyPosition(mousePos.getX(),mousePos.getY());\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/implementation/MySlitherScene.java b/src/main/java/implementation/MySlitherScene.java
+--- a/src/main/java/implementation/MySlitherScene.java	(revision 8762e99ca661bd9c5859dcde40805da7f8a87cea)
++++ b/src/main/java/implementation/MySlitherScene.java	(date 1704833409321)
+@@ -20,7 +20,7 @@
+     public void play(){
+         for (Snake s:snakeList){
+             s.choseDirection(this);
+-            s.move();
++            s.move(snakeList);
+             //if snake is touching a fruit add a segment to snake and display it
+ 
+             if(s.isTouchingSom(fruitList)){
+Index: src/main/java/lib/Snake.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package lib;\r\n\r\nimport javafx.scene.shape.Circle;\r\nimport java.security.InvalidParameterException;\r\nimport java.util.List;\r\n\r\npublic interface Snake extends GraphicalObject{\r\n    /**@return return true if the segment of the snake is the head*/\r\n    abstract boolean isHead();\r\n\r\n    /**@return the next segment of the snake. Null if it does not exist.*/\r\n    abstract Snake next();\r\n\r\n    /**@return the previous segment of the snake. Null if it does not exist.*/\r\n    abstract Snake prev();\r\n    /**@return the last segment of the snake. Null if it does not exist.*/\r\n    abstract Snake last();\r\n\r\n    /**Add a segment at the end of the snake*/\r\n    abstract void add();\r\n\r\n    /** Remove the segment and all the next one. If the segment isHead(), call the method killSnake().*/\r\n    abstract void removeFrom();\r\n\r\n    abstract double getX();\r\n    abstract double getY();\r\n    abstract double getVelocity();\r\n\r\n    /**Return position toward the snake go.*/\r\n    abstract Position getDirection();\r\n\r\n    /**\r\n     * Ask the snake to update its currentDirection. Only got sense for the head.\r\n     *\r\n     * @param scene the scene where the snake evolve\r\n     */\r\n    abstract void choseDirection(SlitherScene scene);\r\n\r\n    /** Change the Position of every Snake part, needs to be called on the head ! If direction null, the snake doesn't move.*/\r\n    default void move(){\r\n        Snake tmp = this.last();\r\n        if(!this.isHead()){\r\n            throw new InvalidParameterException();\r\n        }\r\n\r\n        Position dir= getDirection();\r\n        if(dir == null) return;\r\n        Position pos= getPos();\r\n        double[] vector= Utils.velocityVector(pos.getX(), pos.getY(), dir.getX(), dir.getY(), this.getVelocity());\r\n\r\n        if(pos.getX()+ vector[0]> SlitherScene.windowWidth || pos.getX()+ vector[0]<0 || pos.getY()+ vector[1]>SlitherScene.windowHeight || pos.getY()+ vector[1] < 0){\r\n            return;\r\n        }\r\n\r\n        while(tmp.prev() != null){ //moving the segment\r\n            tmp.setPosition(tmp.prev().getX(),tmp.prev().getY());\r\n            tmp.moveCircle();\r\n            tmp = tmp.prev();\r\n        }\r\n        //moving the head\r\n        this.setPosition(\r\n                pos.getX()+ vector[0],\r\n                pos.getY()+ vector[1]);\r\n        Snake next= this.next();\r\n        if(next != null && this.isTouching(this.next())) {\r\n            this.setPosition(pos.getX(), pos.getY());\r\n            return;\r\n        }\r\n        this.moveCircle();\r\n       if(this.isDead() && this instanceof ControllableSnake<?>){\r\n           ///////////////TODO///////////////////\r\n           System.out.println(\"dead\");\r\n           System.exit(0);\r\n       }\r\n    }\r\n\r\n    public boolean isDead();\r\n    abstract boolean isTouching (GraphicalObject obj);\r\n    abstract boolean isTouchingSom (List<Fruit> list);\r\n\r\n    /** change the pos of the circle of this on the scene */\r\n    abstract void moveCircle();\r\n\r\n     abstract Circle getSegment();\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/lib/Snake.java b/src/main/java/lib/Snake.java
+--- a/src/main/java/lib/Snake.java	(revision 8762e99ca661bd9c5859dcde40805da7f8a87cea)
++++ b/src/main/java/lib/Snake.java	(date 1704835138553)
+@@ -1,5 +1,6 @@
+ package lib;
+ 
++import implementation.IaSnake;
+ import javafx.scene.shape.Circle;
+ import java.security.InvalidParameterException;
+ import java.util.List;
+@@ -37,7 +38,7 @@
+     abstract void choseDirection(SlitherScene scene);
+ 
+     /** Change the Position of every Snake part, needs to be called on the head ! If direction null, the snake doesn't move.*/
+-    default void move(){
++    default void move(List<Snake> snakeList){
+         Snake tmp = this.last();
+         if(!this.isHead()){
+             throw new InvalidParameterException();
+@@ -67,17 +68,25 @@
+             return;
+         }
+         this.moveCircle();
+-       if(this.isDead() && this instanceof ControllableSnake<?>){
++       if(this.isDead(snakeList) && this instanceof ControllableSnake<?>){
+            ///////////////TODO///////////////////
+            System.out.println("dead");
+            System.exit(0);
++       }
++       if(this.isDead(snakeList) && this instanceof IaSnake){
++            //tuer ia
++           System.out.println("dead");
++           //System.exit(0);
++
+        }
+     }
+ 
+-    public boolean isDead();
++    public boolean isDead(List<Snake> snakelist);
+     abstract boolean isTouching (GraphicalObject obj);
+     abstract boolean isTouchingSom (List<Fruit> list);
+ 
++    abstract boolean isDying(Snake head);
++
+     /** change the pos of the circle of this on the scene */
+     abstract void moveCircle();
+ 
+Index: src/main/java/lib/GameLoopTimer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package lib;\r\n\r\nimport javafx.animation.AnimationTimer;\r\n\r\npublic abstract class GameLoopTimer extends AnimationTimer {\r\n\r\n    private long lastFrameTimeNanos;\r\n    private long pauseStart;\r\n    boolean isPaused = false;\r\n    private boolean isActive = false;\r\n   private boolean pauseScheduled;\r\n    private boolean playScheduled;\r\n    private boolean restartScheduled;\r\n\r\n    public boolean isPaused() {\r\n        return isPaused;\r\n    }\r\n\r\n    public boolean isActive() {\r\n        return isActive;\r\n    }\r\n\r\n    public void pause() {\r\n        if (!isPaused) {\r\n            pauseScheduled = true;\r\n        }\r\n    }\r\n\r\n    public void play() {\r\n        if (isPaused) {\r\n            playScheduled = true;\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public void start() {\r\n        super.start();\r\n        isActive = true;\r\n        restartScheduled = true;\r\n    }\r\n\r\n    @Override\r\n    public void stop() {\r\n        super.stop();\r\n        pauseStart = 0;\r\n        isPaused = false;\r\n        isActive = false;\r\n        pauseScheduled = false;\r\n        playScheduled = false;\r\n    }\r\n\r\n    @Override\r\n    public void handle(long now){\r\n        System.out.println(\"now \"+ now);\r\n        if (pauseScheduled) {\r\n            pauseStart = now;\r\n            isPaused = true;\r\n            pauseScheduled = false;\r\n        }\r\n\r\n        if (playScheduled) {\r\n            isPaused = false;\r\n            playScheduled = false;\r\n        }\r\n\r\n        if (restartScheduled) {\r\n            isPaused = false;\r\n            restartScheduled = false;\r\n        }\r\n\r\n        if (!isPaused) {\r\n            float secondsSinceLastFrame = (float) ((now - lastFrameTimeNanos) / 1e9);\r\n            lastFrameTimeNanos = now;\r\n            tick(secondsSinceLastFrame);\r\n        }\r\n\r\n    }\r\n\r\n    public abstract void tick(float secondsSinceLastFrame);\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/lib/GameLoopTimer.java b/src/main/java/lib/GameLoopTimer.java
+--- a/src/main/java/lib/GameLoopTimer.java	(revision 8762e99ca661bd9c5859dcde40805da7f8a87cea)
++++ b/src/main/java/lib/GameLoopTimer.java	(date 1704831521889)
+@@ -8,9 +8,9 @@
+     private long pauseStart;
+     boolean isPaused = false;
+     private boolean isActive = false;
+-   private boolean pauseScheduled;
+-    private boolean playScheduled;
+-    private boolean restartScheduled;
++   private boolean pauseScheduled = false;
++    private boolean playScheduled = false;
++    private boolean restartScheduled= false;
+ 
+     public boolean isPaused() {
+         return isPaused;
+@@ -51,7 +51,6 @@
+ 
+     @Override
+     public void handle(long now){
+-        System.out.println("now "+ now);
+         if (pauseScheduled) {
+             pauseStart = now;
+             isPaused = true;
+@@ -69,6 +68,7 @@
+         }
+ 
+         if (!isPaused) {
++            //System.out.println("now "+ now);
+             float secondsSinceLastFrame = (float) ((now - lastFrameTimeNanos) / 1e9);
+             lastFrameTimeNanos = now;
+             tick(secondsSinceLastFrame);

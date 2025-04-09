@@ -1,0 +1,92 @@
+Index: demo/src/main/java/module-info.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>module com.example.demo {\r\n    requires javafx.controls;\r\n    requires javafx.fxml;\r\n\r\n    requires org.controlsfx.controls;\r\n\r\n    opens com.example.demo to javafx.fxml;\r\n    exports com.example.demo;\r\n}
+===================================================================
+diff --git a/demo/src/main/java/module-info.java b/demo/src/main/java/module-info.java
+--- a/demo/src/main/java/module-info.java	
++++ b/demo/src/main/java/module-info.java	
+@@ -2,7 +2,7 @@
+     requires javafx.controls;
+     requires javafx.fxml;
+ 
+-    requires org.controlsfx.controls;
++   // requires org.controlsfx.controls;
+ 
+     opens com.example.demo to javafx.fxml;
+     exports com.example.demo;
+Index: demo/src/main/java/lib/Game.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package lib;\r\n\r\npublic interface Game {\r\n    /**Initialize a game for start*/\r\n    abstract void init();\r\n\r\n    /**Update the game relative to it evolution*/\r\n    abstract void update();\r\n\r\n    /**Print the game interface*/\r\n    abstract void affiche();\r\n}
+===================================================================
+diff --git a/demo/src/main/java/lib/Game.java b/demo/src/main/java/lib/Game.java
+--- a/demo/src/main/java/lib/Game.java	
++++ b/demo/src/main/java/lib/Game.java	
+@@ -4,7 +4,7 @@
+     /**Initialize a game for start*/
+     abstract void init();
+ 
+-    /**Update the game relative to it evolution*/
++    /**Update the game relative to its evolution*/
+     abstract void update();
+ 
+     /**Print the game interface*/
+Index: .idea/slither.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\" inherit-compiler-output=\"true\">\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$\" />\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n  </component>\r\n</module>
+===================================================================
+diff --git a/.idea/slither.iml b/.idea/slither.iml
+--- a/.idea/slither.iml	
++++ b/.idea/slither.iml	
+@@ -1,8 +1,11 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+-<module type="JAVA_MODULE" version="4">
++<module external.linked.project.id="slither" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$" external.system.id="GRADLE" external.system.module.group="" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+   <component name="NewModuleRootManager" inherit-compiler-output="true">
+     <exclude-output />
+-    <content url="file://$MODULE_DIR$" />
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/.gradle" />
++      <excludeFolder url="file://$MODULE_DIR$/build" />
++    </content>
+     <orderEntry type="inheritedJdk" />
+     <orderEntry type="sourceFolder" forTests="false" />
+   </component>
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectModuleManager\">\r\n    <modules>\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/slither.iml\" filepath=\"$PROJECT_DIR$/.idea/slither.iml\" />\r\n    </modules>\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+--- a/.idea/modules.xml	
++++ b/.idea/modules.xml	
+@@ -2,6 +2,7 @@
+ <project version="4">
+   <component name="ProjectModuleManager">
+     <modules>
++      <module fileurl="file://$PROJECT_DIR$/demo/src/main/main.iml" filepath="$PROJECT_DIR$/demo/src/main/main.iml" />
+       <module fileurl="file://$PROJECT_DIR$/.idea/slither.iml" filepath="$PROJECT_DIR$/.idea/slither.iml" />
+     </modules>
+   </component>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	
++++ b/.idea/misc.xml	
+@@ -1,6 +1,9 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager">
++  <component name="FrameworkDetectionExcludesConfiguration">
++    <file type="web" url="file://$PROJECT_DIR$" />
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file

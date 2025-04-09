@@ -8,10 +8,7 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        //PaneScreen canvas = new PaneScreen();
-        //MySlitherScene scene = new MySlitherScene(canvas);
-        //GameControllerArrow controller = new GameControllerArrow(canvas,scene,true,true,false);
-        //controller.initialize(null,null);
+
         MainScene mainScene = new MainScene(new PaneScreen());
         SceneController sceneController = new SceneController(stage);
         mainScene.init();

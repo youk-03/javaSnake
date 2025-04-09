@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="91449ef2-e9ee-4f97-bf1e-81af38de8b1b" name="Changes" comment="h">
+      <change beforePath="$PROJECT_DIR$/src/main/java/application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/application/Main.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2ZFdBPTlUh9uVUOeSeUchCk0nFl" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;11&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/javafx-sdk-21.0.1/lib/javafx.web.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kalli\OneDrive\Bureau\cours\L3\S5\INFO\cpoo\slither\.idea" />
+      <recent name="C:\Users\kalli\OneDrive\Bureau\cours\L3\S5\INFO\cpoo\slither" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.HelloApplication" />
+      <module name="MySlither" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="application.Main" />
+      <module name="MySlither" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="application.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main2" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.Main2" />
+      <module name="MySlither" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainKTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="application.MainKTest" />
+      <module name="MySlither" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="application.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="application.HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="application.HelloApplication" />
+      <module name="MySlither" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="application.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="slither" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="gradlew" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/gradlew" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/demo" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main2" />
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.MainKTest" />
+      <item itemvalue="Application.application.HelloApplication" />
+      <item itemvalue="Application.HelloApplication" />
+      <item itemvalue="Gradle.slither" />
+      <item itemvalue="Shell Script.gradlew" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.application.HelloApplication" />
+        <item itemvalue="Application.MainKTest" />
+        <item itemvalue="Application.HelloApplication" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Gradle.slither" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="91449ef2-e9ee-4f97-bf1e-81af38de8b1b" name="Changes" comment="" />
+      <created>1702021624965</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1702021624965</updated>
+      <workItem from="1702021626322" duration="2936000" />
+      <workItem from="1702374528273" duration="686000" />
+      <workItem from="1702469853789" duration="2287000" />
+      <workItem from="1703584868890" duration="30209000" />
+      <workItem from="1704227829963" duration="483000" />
+      <workItem from="1704228626729" duration="34448000" />
+      <workItem from="1704453907524" duration="12818000" />
+      <workItem from="1705142646227" duration="43349000" />
+      <workItem from="1705304853508" duration="2309000" />
+    </task>
+    <task id="LOCAL-00001" summary="circle is moving">
+      <option name="closed" value="true" />
+      <created>1703632598521</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1703632598521</updated>
+    </task>
+    <task id="LOCAL-00002" summary="circle is moving">
+      <option name="closed" value="true" />
+      <created>1703632668908</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1703632668908</updated>
+    </task>
+    <task id="LOCAL-00003" summary="still not clean but added size screen (need to change placement)">
+      <option name="closed" value="true" />
+      <created>1703689187468</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1703689187468</updated>
+    </task>
+    <task id="LOCAL-00004" summary="A bit cleaner need to change the name of the main HelloApplication (but not now i'm scared it will break everything)">
+      <option name="closed" value="true" />
+      <created>1703697950120</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1703697950120</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Main2 addition we can now add segment with a button and they move">
+      <option name="closed" value="true" />
+      <created>1703772498902</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1703772498902</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Snake is dying, need to change System.exit, 10 fruits appear at random places + Snake can't go out of the screen or go back from where he was">
+      <option name="closed" value="true" />
+      <created>1704376773382</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1704376773382</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Forgot the file">
+      <option name="closed" value="true" />
+      <created>1704376828454</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1704376828454</updated>
+    </task>
+    <task id="LOCAL-00008" summary="eating fruit add a segment and a new fruit appear">
+      <option name="closed" value="true" />
+      <created>1704386740559</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1704386740559</updated>
+    </task>
+    <task id="LOCAL-00009" summary="while loop ? kind off ? need to be change for it to properly work with a while loop">
+      <option name="closed" value="true" />
+      <created>1704469912344</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1704469912344</updated>
+    </task>
+    <task id="LOCAL-00010" summary="infinite map">
+      <option name="closed" value="true" />
+      <created>1705161349836</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1705161349836</updated>
+    </task>
+    <task id="LOCAL-00011" summary="hell">
+      <option name="closed" value="true" />
+      <created>1705231805997</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1705231805997</updated>
+    </task>
+    <task id="LOCAL-00012" summary="scrolling or not implemented">
+      <option name="closed" value="true" />
+      <created>1705235618143</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1705235618143</updated>
+    </task>
+    <task id="LOCAL-00013" summary="ia can die (normalement), and we can die bc of ia or other snake + cleaning in fruit and gameloopTimer">
+      <option name="closed" value="true" />
+      <created>1705239220499</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1705239220499</updated>
+    </task>
+    <task id="LOCAL-00014" summary="small correction nothing much">
+      <option name="closed" value="true" />
+      <created>1705241117709</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1705241117709</updated>
+    </task>
+    <task id="LOCAL-00015" summary="last commit i hope">
+      <option name="closed" value="true" />
+      <created>1705245614193</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1705245614193</updated>
+    </task>
+    <task id="LOCAL-00016" summary="correction">
+      <option name="closed" value="true" />
+      <created>1705250133406</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1705250133406</updated>
+    </task>
+    <task id="LOCAL-00017" summary="h">
+      <option name="closed" value="true" />
+      <created>1705250260755</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1705250260755</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="circle is moving" />
+    <MESSAGE value="still not clean but added size screen (need to change placement)" />
+    <MESSAGE value="A bit cleaner need to change the name of the main HelloApplication (but not now i'm scared it will break everything)" />
+    <MESSAGE value="Main2 addition we can now add segment with a button and they move" />
+    <MESSAGE value="Snake is dying, need to change System.exit, 10 fruits appear at random places + Snake can't go out of the screen or go back from where he was" />
+    <MESSAGE value="Forgot the file" />
+    <MESSAGE value="eating fruit add a segment and a new fruit appear" />
+    <MESSAGE value="while loop ? kind off ? need to be change for it to properly work with a while loop" />
+    <MESSAGE value="infinite map" />
+    <MESSAGE value="hell" />
+    <MESSAGE value="scrolling or not implemented" />
+    <MESSAGE value="ia can die (normalement), and we can die bc of ia or other snake + cleaning in fruit and gameloopTimer" />
+    <MESSAGE value="small correction nothing much" />
+    <MESSAGE value="last commit i hope" />
+    <MESSAGE value="correction" />
+    <MESSAGE value="h" />
+    <option name="LAST_COMMIT_MESSAGE" value="h" />
+  </component>
+</project>

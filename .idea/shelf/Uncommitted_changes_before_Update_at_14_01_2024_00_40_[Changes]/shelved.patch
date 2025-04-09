@@ -1,0 +1,38 @@
+Index: src/main/java/implementation/GameController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package implementation;\r\n\r\nimport javafx.fxml.Initializable;\r\nimport lib.*;\r\n\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.ResourceBundle;\r\n\r\npublic class GameController implements Initializable {\r\n\r\n   public PaneScreen pane;\r\n   private List<Snake> snakeList;\r\n   private List<Fruit> fruitList;\r\n\r\n   MySlitherScene scene;\r\n\r\n\r\n    public GameController(PaneScreen pane, MySlitherScene scene){\r\n        this.pane = pane;\r\n        this.scene = scene;\r\n    }\r\n\r\n    @Override\r\n    public void initialize(URL url, ResourceBundle resourceBundle) {\r\n        //initialise le jeu et lance la while true\r\n        ArrowSnake head = new ArrowSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));\r\n        //MouseSnake head = new MouseSnake(new MyPosition(SlitherScene.windowWidth / 2, SlitherScene.windowHeight / 2));\r\n        IaSnake ia = new IaSnake(new MyPosition(SlitherScene.windowWidth / 3, SlitherScene.windowHeight / 3));\r\n\r\n        snakeList= new ArrayList<>();\r\n        snakeList.add(head);\r\n        //snakeList.add(ia);\r\n        for(Snake s:snakeList){\r\n            s.display(pane);\r\n        }\r\n\r\n        MyFruit.init(pane,snakeList);\r\n        fruitList= MyFruit.getListFruit();\r\n        scene.init(snakeList,fruitList);\r\n\r\n        GameLoopTimer timer = new GameLoopTimer() {\r\n            @Override\r\n            public void tick(float secondsSinceLastFrame) {\r\n                //while true\r\n                GameController.this.play();\r\n            }\r\n        };\r\n        timer.start();\r\n    }\r\n\r\n    public void play(){\r\n        //a chaque mouvement du joueur bouger les fruits\r\n        for (Snake s:snakeList){\r\n            s.choseDirection(scene);\r\n            s.move(fruitList);\r\n            //if snake is touching a fruit add a segment to snake and display it\r\n\r\n            if(s.isTouchingSom(fruitList)){\r\n                s.add();\r\n                s.last().display(pane);\r\n                //add a new fruits to map\r\n                Fruit.displayAFruit(fruitList,snakeList,true);\r\n            }\r\n        }\r\n    }\r\n\r\n}\r\n\r\n\r\n
+===================================================================
+diff --git a/src/main/java/implementation/GameController.java b/src/main/java/implementation/GameController.java
+--- a/src/main/java/implementation/GameController.java	
++++ b/src/main/java/implementation/GameController.java	
+@@ -15,11 +15,20 @@
+    private List<Fruit> fruitList;
+ 
+    MySlitherScene scene;
++   public static GameLoopTimer timer;
+ 
+ 
+     public GameController(PaneScreen pane, MySlitherScene scene){
+         this.pane = pane;
+         this.scene = scene;
++        this.timer = new GameLoopTimer() {
++            @Override
++            public void tick(float secondsSinceLastFrame) {
++                //while true
++                GameController.this.play();
++            }
++        };
++
+     }
+ 
+     @Override
+@@ -47,7 +56,7 @@
+                 GameController.this.play();
+             }
+         };
+-        timer.start();
++        timer.pause();
+     }
+ 
+     public void play(){

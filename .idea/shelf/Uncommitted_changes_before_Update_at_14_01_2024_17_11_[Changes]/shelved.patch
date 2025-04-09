@@ -1,0 +1,19 @@
+Index: src/main/java/implementation/IaSnake.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package implementation;\r\n\r\nimport javafx.scene.paint.Color;\r\nimport lib.Fruit;\r\nimport lib.Position;\r\nimport lib.SlitherScene;\r\nimport lib.Utils;\r\n\r\nimport java.util.List;\r\n\r\npublic class IaSnake extends MySnake{\r\n    public IaSnake(Position pos) {\r\n        super(pos,Color.DARKRED,Color.CRIMSON);\r\n    }\r\n\r\n    @Override\r\n    public void choseDirection(SlitherScene scene){\r\n        List<Fruit> fruits= scene.getFruitList();\r\n        if(fruits == null || fruits.get(0) == null){\r\n            setCurrentDirection(null);\r\n            return;\r\n        }\r\n\r\n        Position pos= this.getPos();\r\n        Position minPos= null;\r\n        double min= -1;\r\n\r\n        for(Fruit f:fruits){\r\n            if(f.isTakable() && f.getPos().getX() > 0 && f.getPos().getX() < SlitherScene.windowWidth && f.getPos().getY() > 0 && f.getPos().getY() < SlitherScene.windowHeight){\r\n                Position fpos= f.getPos();\r\n                if(!willDie(fpos)){\r\n                    if(minPos == null){\r\n                        minPos= fpos;\r\n                        min= Utils.distance(pos,fpos);\r\n                    } else {\r\n                        double fdist= Utils.distance(pos,fpos);\r\n                        if(fdist<min){\r\n                            minPos= fpos;\r\n                            min= fdist;\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }\r\n\r\n        if(minPos != null) this.setCurrentDirection(minPos);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/implementation/IaSnake.java b/src/main/java/implementation/IaSnake.java
+--- a/src/main/java/implementation/IaSnake.java	(revision 025d0a5143da93567049ce2a9acf4fe7a4c764e3)
++++ b/src/main/java/implementation/IaSnake.java	(date 1705248633543)
+@@ -26,7 +26,7 @@
+         double min= -1;
+ 
+         for(Fruit f:fruits){
+-            if(f.isTakable() && f.getPos().getX() > 0 && f.getPos().getX() < SlitherScene.windowWidth && f.getPos().getY() > 0 && f.getPos().getY() < SlitherScene.windowHeight){
++            if(f.isTakable() /*&& f.getPos().getX() > 0 && f.getPos().getX() < SlitherScene.windowWidth && f.getPos().getY() > 0 && f.getPos().getY() < SlitherScene.windowHeight*/){
+                 Position fpos= f.getPos();
+                 if(!willDie(fpos)){
+                     if(minPos == null){
